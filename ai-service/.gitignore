@@ -1,0 +1,5 @@
+.env
+.venv/
+ai-service/venv/
+env/
+ai-service/.env
