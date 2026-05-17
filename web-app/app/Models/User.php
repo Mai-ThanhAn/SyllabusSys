@@ -1,32 +1,98 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+/**
+ * Class User
+ * 
+ * @property int $id
+ * @property string $email
+ * @property string $full_name
+ * @property string|null $google_id
+ * @property string|null $avatar_url
+ * @property bool|null $is_approved
+ * @property bool|null $is_active
+ * @property Carbon|null $last_login_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * 
+ * @property Collection|SyllabusHistory[] $syllabus_histories
+ * @property Collection|InstructorCourse[] $instructor_courses
+ * @property Collection|SyllabusApproval[] $syllabus_approvals
+ * @property Collection|Role[] $roles
+ * @property Collection|SyllabusVersion[] $syllabus_versions
+ * @property Collection|Syllabus[] $syllabi
+ * @property Collection|Student[] $students
+ * @property Collection|ApprovalRequest[] $approval_requests
+ *
+ * @package App\Models
+ */
+class User extends Model
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+	protected $table = 'users';
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+	protected $casts = [
+		'is_approved' => 'bool',
+		'is_active' => 'bool',
+		'last_login_at' => 'datetime'
+	];
+
+	protected $fillable = [
+		'email',
+		'full_name',
+		'google_id',
+		'avatar_url',
+		'is_approved',
+		'is_active',
+		'last_login_at'
+	];
+
+	public function syllabus_histories()
+	{
+		return $this->hasMany(SyllabusHistory::class, 'changed_by');
+	}
+
+	public function instructor_courses()
+	{
+		return $this->hasMany(InstructorCourse::class, 'lecturer_id');
+	}
+
+	public function syllabus_approvals()
+	{
+		return $this->hasMany(SyllabusApproval::class, 'approved_by');
+	}
+
+	public function roles()
+	{
+		return $this->belongsToMany(Role::class, 'user_roles')
+					->withPivot('start_date', 'end_date');
+	}
+
+	public function syllabus_versions()
+	{
+		return $this->hasMany(SyllabusVersion::class, 'created_by');
+	}
+
+	public function syllabi()
+	{
+		return $this->hasMany(Syllabus::class, 'assigned_to');
+	}
+
+	public function students()
+	{
+		return $this->hasMany(Student::class);
+	}
+
+	public function approval_requests()
+	{
+		return $this->hasMany(ApprovalRequest::class);
+	}
 }
