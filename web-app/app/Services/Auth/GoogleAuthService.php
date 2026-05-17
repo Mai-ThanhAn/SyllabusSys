@@ -69,27 +69,19 @@ class GoogleAuthService
                 'email' => $data['email'],
                 'full_name' => $data['full_name'],
                 'google_id' => $data['google_id'] ?? null,
-                'avatar_url' => $data['avatar_url'] ?? 'default.jpg',
-
+                'avatar_url' => $data['avatar_url'] ?? null,
                 'is_approved' => false,
-
-                // pending nhưng vẫn active
                 'is_active' => true,
-
+                'university_id' => $data['university_id'],
                 'department_id' => $data['department_id'],
                 'program_id' => $data['program_id'] ?? null,
             ]);
 
             ApprovalRequest::create([
                 'user_id' => $user->id,
-
                 'requested_role' => $data['requested_role'],
-
                 'department_id' => $data['department_id'],
-                'faculty_id' => $data['faculty_id'],
-
                 'note' => $data['note'] ?? null,
-
                 'status' => ApprovalStatus::PENDING->value
             ]);
         });

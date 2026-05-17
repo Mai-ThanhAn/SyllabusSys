@@ -22,8 +22,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int|null $approved_by
+ * @property Carbon|null $approved_at
+ * @property string|null $rejected_reason
  *
- * @property User $user
+ * @property User|null $user
  * @property Department|null $department
  *
  * @package App\Models\Base\Base
@@ -34,12 +37,14 @@ class ApprovalRequest extends Model
 
 	protected $casts = [
 		'user_id' => 'int',
-		'department_id' => 'int'
+		'department_id' => 'int',
+		'approved_by' => 'int',
+		'approved_at' => 'datetime'
 	];
 
 	public function user()
 	{
-		return $this->belongsTo(User::class);
+		return $this->belongsTo(User::class, 'approved_by');
 	}
 
 	public function department()

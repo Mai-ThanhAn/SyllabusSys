@@ -158,4 +158,18 @@ class AccountController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function chooseRole()
+    {
+        if (!session()->has('GoogleEmail')) {
+            return redirect()
+                ->route('account.login')
+                ->with('error', 'Phiên đăng ký đã hết hạn.');
+        }
+
+        return view('account.choose_role', [
+            'email' => session('GoogleEmail'),
+            'fullName' => session('GoogleName')
+        ]);
+    }
 }

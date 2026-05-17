@@ -17,7 +17,7 @@ Route::controller(AccountController::class)
         Route::get('/google/callback', 'googleCallback')
             ->name('google.callback');
 
-        Route::get('/choose-role', 'registerLecturer')
+        Route::get('/choose-role', 'chooseRole')
             ->name('chooseRole');
 
         Route::post('/register-lecturer', 'storeLecturer')
@@ -25,4 +25,10 @@ Route::controller(AccountController::class)
 
         Route::post('/logout', 'logout')
             ->name('logout');
+
+        Route::get('/register-lecturer', 'registerLecturer')
+            ->name('registerLecturer');
+
+        Route::post('/register-lecturer', 'storeLecturer')
+            ->name('storeLecturer');
     });

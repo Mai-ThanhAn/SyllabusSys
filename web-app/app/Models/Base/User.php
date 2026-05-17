@@ -92,7 +92,7 @@ class User extends Model
 
 	public function approval_requests()
 	{
-		return $this->hasMany(ApprovalRequest::class);
+		return $this->hasMany(ApprovalRequest::class, 'approved_by');
 	}
 
 	public function syllabus_versions()
