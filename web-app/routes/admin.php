@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\ApprovalRequestController;
+use App\Http\Controllers\Admin\CourseController;
 
 Route::prefix('admin')
     ->middleware(['auth'])
@@ -21,4 +22,10 @@ Route::prefix('admin')
             '/approval-requests/{id}/reject',
             [ApprovalRequestController::class, 'reject']
         )->name('approval.reject');
+
+        Route::prefix('admin')
+            ->middleware(['auth'])
+            ->group(function () {
+                Route::resource('courses', CourseController::class);
+            });
     });
