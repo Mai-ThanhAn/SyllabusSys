@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * Created by Reliese Model.
+ */
+
+namespace App\Models\Base;
+
+use App\Models\Base\Status;
+use App\Models\Base\Syllabus;
+use App\Models\Base\SyllabusApproval;
+use App\Models\Base\SyllabusHistory;
+use App\Models\Base\SyllabusVersionContent;
+use App\Models\Base\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class SyllabusVersion
+ *
+ * @property int $id
+ * @property int $syllabus_id
+ * @property int $version_number
+ * @property int|null $created_by
+ * @property Carbon|null $created_at
+ * @property string|null $submission_type
+ * @property int|null $base_version_id
+ * @property int|null $status_id
+ * @property string|null $note
+ *
+ * @property Syllabus $syllabus
+ * @property User|null $user
+ * @property \App\Models\Base\SyllabusVersion|null $syllabus_version
+ * @property Status|null $status
+ * @property Collection|SyllabusApproval[] $syllabus_approvals
+ * @property Collection|SyllabusHistory[] $syllabus_histories
+ * @property Collection|SyllabusVersionContent[] $syllabus_version_contents
+ * @property Collection|\App\Models\Base\SyllabusVersion[] $syllabus_versions
+ *
+ * @package App\Models\Base\Base
+ */
+class SyllabusVersion extends Model
+{
+	protected $table = 'syllabus_versions';
+	public $timestamps = false;
+
+	protected $casts = [
+		'syllabus_id' => 'int',
+		'version_number' => 'int',
+		'created_by' => 'int',
+		'base_version_id' => 'int',
+		'status_id' => 'int'
+	];
+
+	public function syllabus()
+	{
+		return $this->belongsTo(Syllabus::class);
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'created_by');
+	}
+
+	public function syllabus_version()
+	{
+		return $this->belongsTo(\App\Models\Base\SyllabusVersion::class, 'base_version_id');
+	}
+
+	public function status()
+	{
+		return $this->belongsTo(Status::class);
+	}
+
+	public function syllabus_approvals()
+	{
+		return $this->hasMany(SyllabusApproval::class, 'version_id');
+	}
+
+	public function syllabus_histories()
+	{
+		return $this->hasMany(SyllabusHistory::class, 'to_version_id');
+	}
+
+	public function syllabus_version_contents()
+	{
+		return $this->hasMany(SyllabusVersionContent::class, 'version_id');
+	}
+
+	public function syllabus_versions()
+	{
+		return $this->hasMany(\App\Models\Base\SyllabusVersion::class, 'base_version_id');
+	}
+}

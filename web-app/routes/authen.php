@@ -3,8 +3,26 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Auth\AccountController;
 
-Route::get('auth/google', [AccountController::class, 'loginWithGoogle'])
-    ->name('auth.google');
+Route::controller(AccountController::class)
+    ->prefix('auth')
+    ->name('auth.')
+    ->group(function () {
 
-Route::get('auth/google/callback', [AccountController::class, 'googleCallback'])
-    ->name('auth.google.callback');
+        Route::get('/login', 'login')
+            ->name('login');
+
+        Route::get('/google', 'loginWithGoogle')
+            ->name('google');
+
+        Route::get('/google/callback', 'googleCallback')
+            ->name('google.callback');
+
+        Route::get('/choose-role', 'registerLecturer')
+            ->name('chooseRole');
+
+        Route::post('/register-lecturer', 'storeLecturer')
+            ->name('storeLecturer');
+
+        Route::post('/logout', 'logout')
+            ->name('logout');
+    });

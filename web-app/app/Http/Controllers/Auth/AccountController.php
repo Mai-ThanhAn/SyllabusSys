@@ -3,169 +3,159 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\ApprovalRequest;
-use App\Models\Student;
+use App\Models\University;
 use App\Models\User;
-use App\Models\Department;
-use App\Models\Faculty;
 
-use Carbon\Carbon;
+use App\Services\Auth\GoogleAuthService;
+use App\Services\Auth\RoleRedirectService;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use Laravel\Socialite\Facades\Socialite;
 
 class AccountController extends Controller
 {
-    // --- LOGIN PLAIN VIEW ---
+    public function __construct(
+        protected GoogleAuthService $googleAuthService,
+        protected RoleRedirectService $roleRedirectService
+    ) {}
+
     public function login()
     {
         return view('account.login');
     }
 
-    // --- ĐIỀU HƯỚNG SANG GOOGLE ---
     public function loginWithGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    // --- GOOGLE CALLBACK ---
     public function googleCallback()
     {
         try {
-            // Socialite tự động đổi 'code' lấy Token và parse Payload cho bạn
+
             $googleUser = Socialite::driver('google')->user();
 
-            // 1. Chỉ cho phép email trường TDMU
-            if (!str_ends_with($googleUser->email, 'tdmu.edu.vn')) {
-                return redirect()->route('account.login')
-                    ->with('error', 'Chỉ chấp nhận email trường TDMU.');
-            }
+            $user = $this->googleAuthService
+                ->handleGoogleLogin($googleUser);
 
-            // 2. Kiểm tra user tồn tại chưa
-            $user = User::where('email', $googleUser->email)->first();
-
-            // =========================
-            // USER CHƯA TỒN TẠI → Chọn Role
-            // =========================
+            // User chưa tồn tại
             if (!$user) {
-                // Giữ lại data dạng TempData giống C#
-                session()->flash('GoogleEmail', $googleUser->email);
-                session()->flash('GoogleName', $googleUser->name);
 
-                return redirect()->route('account.chooseRole');
+                session([
+                    'GoogleEmail' => $googleUser->email,
+                    'GoogleName' => $googleUser->name,
+                    'GoogleAvatar' => $googleUser->avatar,
+                    'GoogleId' => $googleUser->id
+                ]);
+
+                return redirect()
+                    ->route('account.chooseRole');
             }
 
-            // =========================
-            // CHƯA ĐƯỢC DUYỆT
-            // =========================
-            if ($user->is_approved == false) {
-                return redirect()->route('account.login')
-                    ->with('error', 'Tài khoản đang chờ phê duyệt.');
-            }
+            $roleName = $this->googleAuthService
+                ->login($user);
 
-            // =========================
-            // BỊ KHÓA
-            // =========================
-            if ($user->is_active == false) {
-                return redirect()->route('account.login')
-                    ->with('error', 'Tài khoản đã bị khóa.');
-            }
-
-            // =========================
-            // LOGIN & SET SESSION
-            // =========================
-            $this->setUserSession($user);
-
-            // Cập nhật thời gian đăng nhập
-            $user->update([
-                'last_login_at' => Carbon::now()
-            ]);
-
-            // =========================
-            // ĐIỀU HƯỚNG THEO ROLE
-            // =========================
-            // return $this->redirectByRole($user);
-
+            return $this->roleRedirectService
+                ->redirect($roleName);
         } catch (\Exception $ex) {
-            return redirect()->route('account.login')
-                ->with('error', 'Lỗi xác thực: ' . $ex->getMessage());
+
+            return redirect()
+                ->route('account.login')
+                ->with('error', $ex->getMessage());
         }
     }
 
-    // --- REGISTER LECTURER ---
     public function registerLecturer()
     {
-        $email = session()->get('GoogleEmail');
-        $fullName = session()->get('GoogleName');
-        session()->keep(['GoogleEmail', 'GoogleName']);
+        if (!session()->has('GoogleEmail')) {
 
-        return view('account.register_advisor', compact('email', 'fullName', 'departments', 'faculties'));
+            return redirect()
+                ->route('account.login')
+                ->with('error', 'Phiên đăng ký đã hết hạn.');
+        }
+
+        $universities = University::all();
+
+        return view('account.register_advisor', [
+            'email' => session('GoogleEmail'),
+            'fullName' => session('GoogleName'),
+            'universities' => $universities
+        ]);
     }
 
     public function storeLecturer(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-            'full_name' => 'required',
-            'requested_role' => 'required',
-            'department_id' => 'required',
-            'faculty_id' => 'required',
+
+            'full_name' => 'required|string|max:255',
+
+            'university_id' => 'required|integer|exists:universities,id',
+
+            'department_id' => 'required|integer|exists:departments,id',
+
+            'requested_role' => 'required|string'
         ]);
 
-        // Check trùng email
         if (User::where('email', $request->email)->exists()) {
-            return redirect()->route('account.login')->with('error', 'Email đã tồn tại.');
+
+            return redirect()
+                ->route('account.login')
+                ->with('error', 'Email đã tồn tại.');
         }
 
-        // Tạo User trạng thái chờ duyệt
-        $user = User::create([
-            'email' => $request->email,
-            'full_name' => $request->full_name,
-            'role' => $request->requested_role,
-            'is_approved' => false,
-            'is_active' => false,
-            'avatar_url' => 'default.jpg'
-        ]);
+        try {
 
-        ApprovalRequest::create([
-            'user_id' => $user->id,
-            'requested_role' => $request->requested_role,
-            'department_id' => $request->department_id,
-            'faculty_id' => $request->faculty_id,
-            'note' => $request->note,
-            'status' => 'Pending'
-        ]);
+            $this->googleAuthService
+                ->registerLecturer([
 
-        return redirect()->route('account.login')
-            ->with('success', 'Đăng ký thành công. Vui lòng chờ Admin duyệt.');
+                    'email' => $request->email,
+
+                    'full_name' => $request->full_name,
+
+                    'requested_role' => $request->requested_role,
+
+                    'university_id' => $request->university_id,
+
+                    'department_id' => $request->department_id,
+
+                    'note' => $request->note,
+
+                    'google_id' => session('GoogleId'),
+
+                    'avatar_url' => session('GoogleAvatar')
+                ]);
+
+            session()->forget([
+                'GoogleEmail',
+                'GoogleName',
+                'GoogleAvatar',
+                'GoogleId'
+            ]);
+
+            return redirect()
+                ->route('account.login')
+                ->with(
+                    'success',
+                    'Đăng ký thành công. Vui lòng chờ Admin duyệt.'
+                );
+        } catch (\Exception $ex) {
+
+            return back()
+                ->withInput()
+                ->with('error', $ex->getMessage());
+        }
     }
 
-    // --- LOGOUT ---
     public function logout()
     {
         Auth::logout();
-        session()->flush();
-        return redirect()->route('home');
-    }
 
-    // =================================--------------------------------
-    // PRIVATE METHODS
-    // =================================--------------------------------
+        session()->invalidate();
+        session()->regenerateToken();
 
-    private function setUserSession($user)
-    {
-        session([
-            'UserID'   => $user->id,
-            'FullName' => $user->full_name,
-            'Role'     => $user->role
-        ]);
-    }
-
-    private function redirectByRole($user)
-    {
-        if ($user->role === 'Admin') {
-            return redirect()->route('admin.dashboard');
-        }
         return redirect()->route('home');
     }
 }

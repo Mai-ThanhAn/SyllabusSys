@@ -1,41 +1,9 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Base\University as BaseUniversity;
 
-/**
- * Class University
- * 
- * @property int $id
- * @property string $name
- * @property string|null $address
- * @property Carbon|null $created_at
- * @property string $code
- * 
- * @property Collection|Department[] $departments
- *
- * @package App\Models
- */
-class University extends Model
+class University extends BaseUniversity
 {
-	protected $table = 'universities';
-	public $timestamps = false;
-
-	protected $fillable = [
-		'name',
-		'address',
-		'code'
-	];
-
-	public function departments()
-	{
-		return $this->hasMany(Department::class);
-	}
 }

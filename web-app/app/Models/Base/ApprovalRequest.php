@@ -4,41 +4,37 @@
  * Created by Reliese Model.
  */
 
-namespace App\Models;
+namespace App\Models\Base;
 
+use App\Models\Base\Department;
+use App\Models\Base\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Lecture
- * 
+ * Class ApprovalRequest
+ *
  * @property int $id
  * @property int $user_id
- * @property string $student_code
- * @property int $department_id
- * @property string $academic_class
+ * @property string $requested_role
+ * @property int|null $department_id
+ * @property string|null $note
+ * @property string|null $status
  * @property Carbon|null $created_at
- * 
- * @property User $user
- * @property Department $department
+ * @property Carbon|null $updated_at
  *
- * @package App\Models
+ * @property User $user
+ * @property Department|null $department
+ *
+ * @package App\Models\Base\Base
  */
-class Lecture extends Model
+class ApprovalRequest extends Model
 {
-	protected $table = 'lecture';
-	public $timestamps = false;
+	protected $table = 'approval_requests';
 
 	protected $casts = [
 		'user_id' => 'int',
 		'department_id' => 'int'
-	];
-
-	protected $fillable = [
-		'user_id',
-		'student_code',
-		'department_id',
-		'academic_class'
 	];
 
 	public function user()
