@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|Role[] $roles
  * @property Collection|SyllabusVersion[] $syllabus_versions
  * @property Collection|Syllabus[] $syllabi
- * @property Collection|Student[] $students
+ * @property Collection|Lecture[] $lectures
  * @property Collection|ApprovalRequest[] $approval_requests
  *
  * @package App\Models
@@ -62,7 +62,7 @@ class User extends Model
 
 	public function instructor_courses()
 	{
-		return $this->hasMany(InstructorCourse::class, 'lecturer_id');
+		return $this->hasMany(InstructorCourse::class);
 	}
 
 	public function syllabus_approvals()
@@ -86,9 +86,9 @@ class User extends Model
 		return $this->hasMany(Syllabus::class, 'assigned_to');
 	}
 
-	public function students()
+	public function lectures()
 	{
-		return $this->hasMany(Student::class);
+		return $this->hasMany(Lecture::class);
 	}
 
 	public function approval_requests()

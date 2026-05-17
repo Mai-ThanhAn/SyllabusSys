@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Student
+ * Class Lecture
  * 
  * @property int $id
  * @property int $user_id
@@ -24,9 +24,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Student extends Model
+class Lecture extends Model
 {
-	protected $table = 'students';
+	protected $table = 'lecture';
 	public $timestamps = false;
 
 	protected $casts = [

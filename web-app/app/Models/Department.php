@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property University $university
  * @property Collection|Program[] $programs
- * @property Collection|Student[] $students
+ * @property Collection|Lecture[] $lectures
  * @property Collection|ApprovalRequest[] $approval_requests
  *
  * @package App\Models
@@ -49,9 +49,9 @@ class Department extends Model
 		return $this->hasMany(Program::class);
 	}
 
-	public function students()
+	public function lectures()
 	{
-		return $this->hasMany(Student::class);
+		return $this->hasMany(Lecture::class);
 	}
 
 	public function approval_requests()

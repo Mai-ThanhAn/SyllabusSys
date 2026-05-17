@@ -6,15 +6,17 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class InstructorCourse
  * 
  * @property int $id
- * @property int $lecturer_id
+ * @property int $user_id
  * @property int $course_id
- * @property string|null $role
+ * @property int|null $assigned_by
+ * @property Carbon|null $created_at
  * 
  * @property User $user
  * @property Course $course
@@ -27,19 +29,20 @@ class InstructorCourse extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'lecturer_id' => 'int',
-		'course_id' => 'int'
+		'user_id' => 'int',
+		'course_id' => 'int',
+		'assigned_by' => 'int'
 	];
 
 	protected $fillable = [
-		'lecturer_id',
+		'user_id',
 		'course_id',
-		'role'
+		'assigned_by'
 	];
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'lecturer_id');
+		return $this->belongsTo(User::class);
 	}
 
 	public function course()

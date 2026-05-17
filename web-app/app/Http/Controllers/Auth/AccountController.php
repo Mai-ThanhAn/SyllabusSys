@@ -3,9 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApprovalRequest;
+use App\Models\Student;
 use App\Models\User;
+use App\Models\Department;
+use App\Models\Faculty;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class AccountController extends Controller
@@ -86,8 +92,8 @@ class AccountController extends Controller
         }
     }
 
-    // --- REGISTER ADVISOR ---
-    public function registerAdvisor()
+    // --- REGISTER LECTURER ---
+    public function registerLecturer()
     {
         $email = session()->get('GoogleEmail');
         $fullName = session()->get('GoogleName');
@@ -96,7 +102,7 @@ class AccountController extends Controller
         return view('account.register_advisor', compact('email', 'fullName', 'departments', 'faculties'));
     }
 
-    public function storeAdvisor(Request $request)
+    public function storeLecturer(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -121,15 +127,14 @@ class AccountController extends Controller
             'avatar_url' => 'default.jpg'
         ]);
 
-        // Tạo Request phê duyệt
-        // ApprovalRequest::create([
-        //     'user_id' => $user->id,
-        //     'requested_role' => $request->requested_role,
-        //     'department_id' => $request->department_id,
-        //     'faculty_id' => $request->faculty_id,
-        //     'note' => $request->note,
-        //     'status' => 'Pending'
-        // ]);
+        ApprovalRequest::create([
+            'user_id' => $user->id,
+            'requested_role' => $request->requested_role,
+            'department_id' => $request->department_id,
+            'faculty_id' => $request->faculty_id,
+            'note' => $request->note,
+            'status' => 'Pending'
+        ]);
 
         return redirect()->route('account.login')
             ->with('success', 'Đăng ký thành công. Vui lòng chờ Admin duyệt.');
@@ -138,7 +143,8 @@ class AccountController extends Controller
     // --- LOGOUT ---
     public function logout()
     {
-        session()->flush(); // Xóa sạch session
+        Auth::logout();
+        session()->flush();
         return redirect()->route('home');
     }
 
@@ -155,30 +161,11 @@ class AccountController extends Controller
         ]);
     }
 
-    // private function redirectByRole($user)
-    // {
-    //     switch ($user->role) {
-    //         case 'Student':
-    //             $student = Student::where('user_id', $user->id)->first();
-
-    //             if (!$student) {
-    //                 return redirect()->route('student.onboarding.step1');
-    //             }
-
-    //             session(['StudentID' => $student->id]);
-    //             return redirect()->route('student.home');
-
-    //         case 'Advisor':
-    //             return redirect()->route('advisor.home');
-
-    //         case 'Director':
-    //             return redirect()->route('director.home');
-
-    //         case 'Admin':
-    //             return redirect()->route('admin.dashboard');
-
-    //         default:
-    //             return redirect()->route('account.login');
-    //     }
-    // }
+    private function redirectByRole($user)
+    {
+        if ($user->role === 'Admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('home');
+    }
 }

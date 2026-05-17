@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string|null $address
  * @property Carbon|null $created_at
+ * @property string $code
  * 
  * @property Collection|Department[] $departments
  *
@@ -29,7 +30,8 @@ class University extends Model
 
 	protected $fillable = [
 		'name',
-		'address'
+		'address',
+		'code'
 	];
 
 	public function departments()
