@@ -1,6 +1,6 @@
 <h1>Danh sách môn học</h1>
 
-@if(session('success'))
+@if (session('success'))
     <p style="color: green">{{ session('success') }}</p>
 @endif
 
@@ -28,6 +28,10 @@
                 <td>{{ $course->program->name ?? 'N/A' }}</td>
                 <td>
                     <a href="{{ route('courses.edit', $course->id) }}">Sửa</a>
+
+                    <a href="{{ route('courses.assignLecturer', $course->id) }}">
+                        Phân công
+                    </a>
 
                     <form method="POST" action="{{ route('courses.destroy', $course->id) }}" style="display:inline">
                         @csrf
