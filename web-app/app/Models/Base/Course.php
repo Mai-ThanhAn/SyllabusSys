@@ -27,8 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Program|null $program
  * @property Collection|InstructorCourse[] $instructor_courses
- * @property Collection|Syllabus[] $syllabi
  * @property Collection|ApprovedSyllabusCorpu[] $approved_syllabus_corpus
+ * @property Collection|Syllabus[] $syllabi
  *
  * @package App\Models\Base\Base
  */
@@ -51,13 +51,13 @@ class Course extends Model
 		return $this->hasMany(InstructorCourse::class);
 	}
 
-	public function syllabi()
-	{
-		return $this->hasMany(Syllabus::class);
-	}
-
 	public function approved_syllabus_corpus()
 	{
 		return $this->hasMany(ApprovedSyllabusCorpu::class);
+	}
+
+	public function syllabi()
+	{
+		return $this->hasMany(Syllabus::class);
 	}
 }

@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PerformanceIndicatorController;
+use App\Http\Controllers\Admin\ProgramLearningOutcomeController;
 use App\Http\Controllers\Admin\SyllabusSectionController;
 use App\Http\Controllers\Admin\SyllabusTemplateController;
-use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\ApprovalRequestController;
 use App\Http\Controllers\Admin\InstructorCourseController;
 use App\Http\Controllers\Admin\CourseController;
@@ -86,4 +88,46 @@ Route::prefix('admin')
                     [SyllabusSectionController::class, 'destroy']
                 )->name('syllabus-templates.sections.destroy');
             });
+
+        Route::prefix('admin')
+            ->middleware(['auth'])
+            ->group(function () {
+                Route::get('/programs/{programId}/plos', [ProgramLearningOutcomeController::class, 'index'])
+                    ->name('programs.plos.index');
+
+                Route::get('/programs/{programId}/plos/create', [ProgramLearningOutcomeController::class, 'create'])
+                    ->name('programs.plos.create');
+
+                Route::post('/programs/{programId}/plos', [ProgramLearningOutcomeController::class, 'store'])
+                    ->name('programs.plos.store');
+
+                Route::get('/programs/{programId}/plos/{ploId}/edit', [ProgramLearningOutcomeController::class, 'edit'])
+                    ->name('programs.plos.edit');
+
+                Route::put('/programs/{programId}/plos/{ploId}', [ProgramLearningOutcomeController::class, 'update'])
+                    ->name('programs.plos.update');
+
+                Route::delete('/programs/{programId}/plos/{ploId}', [ProgramLearningOutcomeController::class, 'destroy'])
+                    ->name('programs.plos.destroy');
+            });
+
+        Route::get('/programs/{programId}/plos/{ploId}/pis', [PerformanceIndicatorController::class, 'index'])
+            ->name('programs.plos.pis.index');
+
+        Route::get('/programs/{programId}/plos/{ploId}/pis/create', [PerformanceIndicatorController::class, 'create'])
+            ->name('programs.plos.pis.create');
+
+        Route::post('/programs/{programId}/plos/{ploId}/pis', [PerformanceIndicatorController::class, 'store'])
+            ->name('programs.plos.pis.store');
+
+        Route::get('/programs/{programId}/plos/{ploId}/pis/{piId}/edit', [PerformanceIndicatorController::class, 'edit'])
+            ->name('programs.plos.pis.edit');
+
+        Route::put('/programs/{programId}/plos/{ploId}/pis/{piId}', [PerformanceIndicatorController::class, 'update'])
+            ->name('programs.plos.pis.update');
+
+        Route::delete('/programs/{programId}/plos/{ploId}/pis/{piId}', [PerformanceIndicatorController::class, 'destroy'])
+            ->name('programs.plos.pis.destroy');
+
+
     });

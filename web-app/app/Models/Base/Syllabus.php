@@ -12,12 +12,14 @@ use App\Models\Base\ApprovedSyllabusCorpu;
 use App\Models\Base\Course;
 use App\Models\Base\CourseLearningOutcome;
 use App\Models\Base\CourseObjective;
+use App\Models\Base\SyllabusAssignment;
 use App\Models\Base\SyllabusContent;
 use App\Models\Base\SyllabusHistory;
 use App\Models\Base\SyllabusOutcome;
+use App\Models\Base\SyllabusPiTarget;
+use App\Models\Base\SyllabusPloTarget;
 use App\Models\Base\SyllabusTemplate;
 use App\Models\Base\SyllabusVersion;
-use App\Models\Base\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -30,14 +32,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $template_id
  * @property string $academic_year
  * @property int|null $created_by
- * @property int|null $assigned_to
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int|null $status_id
+ * @property string|null $planning_note
+ * @property Carbon|null $assigned_at
+ * @property Carbon|null $due_date
  *
  * @property Course $course
  * @property SyllabusTemplate $syllabus_template
- * @property User|null $user
  * @property Collection|SyllabusContent[] $syllabus_contents
  * @property Collection|SyllabusHistory[] $syllabus_histories
  * @property Collection|SyllabusOutcome[] $syllabus_outcomes
@@ -47,6 +50,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|CourseLearningOutcome[] $course_learning_outcomes
  * @property Collection|AiGenerationLog[] $ai_generation_logs
  * @property Collection|AiComplianceReport[] $ai_compliance_reports
+ * @property Collection|SyllabusPloTarget[] $syllabus_plo_targets
+ * @property Collection|SyllabusPiTarget[] $syllabus_pi_targets
+ * @property Collection|SyllabusAssignment[] $syllabus_assignments
  *
  * @package App\Models\Base\Base
  */
@@ -58,8 +64,9 @@ class Syllabus extends Model
 		'course_id' => 'int',
 		'template_id' => 'int',
 		'created_by' => 'int',
-		'assigned_to' => 'int',
-		'status_id' => 'int'
+		'status_id' => 'int',
+		'assigned_at' => 'datetime',
+		'due_date' => 'datetime'
 	];
 
 	public function course()
@@ -70,11 +77,6 @@ class Syllabus extends Model
 	public function syllabus_template()
 	{
 		return $this->belongsTo(SyllabusTemplate::class, 'template_id');
-	}
-
-	public function user()
-	{
-		return $this->belongsTo(User::class, 'assigned_to');
 	}
 
 	public function syllabus_contents()
@@ -120,5 +122,20 @@ class Syllabus extends Model
 	public function ai_compliance_reports()
 	{
 		return $this->hasMany(AiComplianceReport::class);
+	}
+
+	public function syllabus_plo_targets()
+	{
+		return $this->hasMany(SyllabusPloTarget::class);
+	}
+
+	public function syllabus_pi_targets()
+	{
+		return $this->hasMany(SyllabusPiTarget::class);
+	}
+
+	public function syllabus_assignments()
+	{
+		return $this->hasMany(SyllabusAssignment::class);
 	}
 }

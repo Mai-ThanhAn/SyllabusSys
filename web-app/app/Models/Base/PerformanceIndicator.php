@@ -8,6 +8,7 @@ namespace App\Models\Base;
 
 use App\Models\Base\CloPiMapping;
 use App\Models\Base\ProgramLearningOutcome;
+use App\Models\Base\SyllabusPiTarget;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property ProgramLearningOutcome|null $program_learning_outcome
  * @property Collection|CloPiMapping[] $clo_pi_mappings
+ * @property Collection|SyllabusPiTarget[] $syllabus_pi_targets
  *
  * @package App\Models\Base\Base
  */
@@ -41,5 +43,10 @@ class PerformanceIndicator extends Model
 	public function clo_pi_mappings()
 	{
 		return $this->hasMany(CloPiMapping::class, 'pi_id');
+	}
+
+	public function syllabus_pi_targets()
+	{
+		return $this->hasMany(SyllabusPiTarget::class, 'pi_id');
 	}
 }

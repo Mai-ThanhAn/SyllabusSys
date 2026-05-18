@@ -13,6 +13,6 @@ Route::get('/login', function () {
 })->name('login');
 
 require __DIR__ . '/authen.php';
-require __DIR__ . '/director.php';
+require __DIR__ . '/programdirector.php';
 require __DIR__ . '/lecturer.php';
 require __DIR__ . '/admin.php';

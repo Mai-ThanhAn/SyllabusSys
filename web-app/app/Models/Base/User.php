@@ -9,8 +9,8 @@ namespace App\Models\Base;
 use App\Models\Base\ApprovalRequest;
 use App\Models\Base\InstructorCourse;
 use App\Models\Base\Role;
-use App\Models\Base\Syllabus;
 use App\Models\Base\SyllabusApproval;
+use App\Models\Base\SyllabusAssignment;
 use App\Models\Base\SyllabusContent;
 use App\Models\Base\SyllabusHistory;
 use App\Models\Base\SyllabusVersion;
@@ -40,9 +40,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusContent[] $syllabus_contents
  * @property Collection|SyllabusHistory[] $syllabus_histories
  * @property Collection|Role[] $roles
- * @property Collection|Syllabus[] $syllabi
  * @property Collection|ApprovalRequest[] $approval_requests
  * @property Collection|SyllabusVersion[] $syllabus_versions
+ * @property Collection|SyllabusAssignment[] $syllabus_assignments
  *
  * @package App\Models\Base\Base
  */
@@ -85,11 +85,6 @@ class User extends Model
 					->withPivot('start_date', 'end_date');
 	}
 
-	public function syllabi()
-	{
-		return $this->hasMany(Syllabus::class, 'assigned_to');
-	}
-
 	public function approval_requests()
 	{
 		return $this->hasMany(ApprovalRequest::class, 'approved_by');
@@ -98,5 +93,10 @@ class User extends Model
 	public function syllabus_versions()
 	{
 		return $this->hasMany(SyllabusVersion::class, 'created_by');
+	}
+
+	public function syllabus_assignments()
+	{
+		return $this->hasMany(SyllabusAssignment::class, 'assigned_by');
 	}
 }

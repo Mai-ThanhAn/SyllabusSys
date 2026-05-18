@@ -2,68 +2,40 @@
 
 <p>Xin chào, {{ Auth::user()->full_name }}</p>
 
-@if(session('success'))
-    <p style="color: green">{{ session('success') }}</p>
-@endif
-
-@if(session('error'))
-    <p style="color: red">{{ session('error') }}</p>
-@endif
-
-<h2>Danh sách môn được phân công</h2>
-
 <table border="1" cellpadding="8" cellspacing="0">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Mã môn</th>
-            <th>Tên môn</th>
-            <th>Số tín chỉ</th>
+            <th>Môn học</th>
             <th>Chương trình</th>
-            <th>Đề cương</th>
+            <th>Năm học</th>
+            <th>Vai trò</th>
+            <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
     </thead>
 
     <tbody>
-        @forelse($assignedCourses as $assignment)
+        @forelse($assignments as $assignment)
             @php
-                $course = $assignment->course;
-                $latestSyllabus = $course?->syllabi?->sortByDesc('created_at')->first();
+                $syllabus = $assignment->syllabus;
+                $course = $syllabus?->course;
             @endphp
 
             <tr>
-                <td>{{ $course->id ?? 'N/A' }}</td>
-                <td>{{ $course->course_code ?? 'N/A' }}</td>
-                <td>{{ $course->course_name ?? 'N/A' }}</td>
-                <td>{{ $course->credits ?? 'N/A' }}</td>
+                <td>{{ $course->course_code ?? '' }} - {{ $course->course_name ?? '' }}</td>
                 <td>{{ $course->program->name ?? 'N/A' }}</td>
-
+                <td>{{ $syllabus->academic_year ?? 'N/A' }}</td>
+                <td>{{ $assignment->assignment_role }}</td>
+                <td>{{ $syllabus->status->status_name ?? 'N/A' }}</td>
                 <td>
-                    @if($latestSyllabus)
-                        Có đề cương
-                    @else
-                        Chưa có
-                    @endif
-                </td>
-
-                <td>
-                    @if($latestSyllabus)
-                        <a href="#">
-                            Xem / chỉnh sửa đề cương
-                        </a>
-                    @else
-                        <a href="#">
-                            Tạo đề cương
-                        </a>
-                    @endif
+                    <a href="#">
+                        Soạn đề cương
+                    </a>
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="7">
-                    Bạn chưa được phân công môn học nào.
-                </td>
+                <td colspan="6">Bạn chưa được giao đề cương nào.</td>
             </tr>
         @endforelse
     </tbody>
