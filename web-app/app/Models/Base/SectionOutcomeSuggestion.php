@@ -6,7 +6,6 @@
 
 namespace App\Models\Base;
 
-use App\Models\Base\LearningOutcome;
 use App\Models\Base\SyllabusSection;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  *
  * @property SyllabusSection|null $syllabus_section
- * @property LearningOutcome|null $learning_outcome
  *
  * @package App\Models\Base\Base
  */
@@ -39,10 +37,5 @@ class SectionOutcomeSuggestion extends Model
 	public function syllabus_section()
 	{
 		return $this->belongsTo(SyllabusSection::class, 'section_id');
-	}
-
-	public function learning_outcome()
-	{
-		return $this->belongsTo(LearningOutcome::class, 'outcome_id');
 	}
 }

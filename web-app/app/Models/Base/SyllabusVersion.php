@@ -6,6 +6,7 @@
 
 namespace App\Models\Base;
 
+use App\Models\Base\AiComplianceReport;
 use App\Models\Base\Status;
 use App\Models\Base\Syllabus;
 use App\Models\Base\SyllabusApproval;
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusHistory[] $syllabus_histories
  * @property Collection|SyllabusVersionContent[] $syllabus_version_contents
  * @property Collection|\App\Models\Base\SyllabusVersion[] $syllabus_versions
+ * @property Collection|AiComplianceReport[] $ai_compliance_reports
  *
  * @package App\Models\Base\Base
  */
@@ -91,5 +93,10 @@ class SyllabusVersion extends Model
 	public function syllabus_versions()
 	{
 		return $this->hasMany(\App\Models\Base\SyllabusVersion::class, 'base_version_id');
+	}
+
+	public function ai_compliance_reports()
+	{
+		return $this->hasMany(AiComplianceReport::class, 'version_id');
 	}
 }

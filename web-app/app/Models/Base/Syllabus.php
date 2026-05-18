@@ -6,7 +6,12 @@
 
 namespace App\Models\Base;
 
+use App\Models\Base\AiComplianceReport;
+use App\Models\Base\AiGenerationLog;
+use App\Models\Base\ApprovedSyllabusCorpu;
 use App\Models\Base\Course;
+use App\Models\Base\CourseLearningOutcome;
+use App\Models\Base\CourseObjective;
 use App\Models\Base\SyllabusContent;
 use App\Models\Base\SyllabusHistory;
 use App\Models\Base\SyllabusOutcome;
@@ -37,6 +42,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusHistory[] $syllabus_histories
  * @property Collection|SyllabusOutcome[] $syllabus_outcomes
  * @property Collection|SyllabusVersion[] $syllabus_versions
+ * @property Collection|ApprovedSyllabusCorpu[] $approved_syllabus_corpus
+ * @property Collection|CourseObjective[] $course_objectives
+ * @property Collection|CourseLearningOutcome[] $course_learning_outcomes
+ * @property Collection|AiGenerationLog[] $ai_generation_logs
+ * @property Collection|AiComplianceReport[] $ai_compliance_reports
  *
  * @package App\Models\Base\Base
  */
@@ -85,5 +95,30 @@ class Syllabus extends Model
 	public function syllabus_versions()
 	{
 		return $this->hasMany(SyllabusVersion::class);
+	}
+
+	public function approved_syllabus_corpus()
+	{
+		return $this->hasMany(ApprovedSyllabusCorpu::class);
+	}
+
+	public function course_objectives()
+	{
+		return $this->hasMany(CourseObjective::class);
+	}
+
+	public function course_learning_outcomes()
+	{
+		return $this->hasMany(CourseLearningOutcome::class);
+	}
+
+	public function ai_generation_logs()
+	{
+		return $this->hasMany(AiGenerationLog::class);
+	}
+
+	public function ai_compliance_reports()
+	{
+		return $this->hasMany(AiComplianceReport::class);
 	}
 }

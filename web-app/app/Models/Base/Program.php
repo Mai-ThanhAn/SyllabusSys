@@ -8,6 +8,7 @@ namespace App\Models\Base;
 
 use App\Models\Base\Course;
 use App\Models\Base\Department;
+use App\Models\Base\ProgramLearningOutcome;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Department $department
  * @property Collection|Course[] $courses
+ * @property Collection|ProgramLearningOutcome[] $program_learning_outcomes
  *
  * @package App\Models\Base\Base
  */
@@ -43,5 +45,10 @@ class Program extends Model
 	public function courses()
 	{
 		return $this->hasMany(Course::class);
+	}
+
+	public function program_learning_outcomes()
+	{
+		return $this->hasMany(ProgramLearningOutcome::class);
 	}
 }

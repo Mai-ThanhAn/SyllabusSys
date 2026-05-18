@@ -6,7 +6,6 @@
 
 namespace App\Models\Base;
 
-use App\Models\Base\LearningOutcome;
 use App\Models\Base\SyllabusContent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  *
  * @property SyllabusContent|null $syllabus_content
- * @property LearningOutcome|null $learning_outcome
  *
  * @package App\Models\Base\Base
  */
@@ -38,10 +36,5 @@ class SyllabusContentMapping extends Model
 	public function syllabus_content()
 	{
 		return $this->belongsTo(SyllabusContent::class, 'content_id');
-	}
-
-	public function learning_outcome()
-	{
-		return $this->belongsTo(LearningOutcome::class, 'outcome_id');
 	}
 }

@@ -7,29 +7,29 @@
 namespace App\Models\Base;
 
 use App\Models\Base\Syllabus;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class SyllabusOutcome
+ * Class CourseObjective
  *
  * @property int $id
- * @property int $syllabus_id
- * @property int $outcome_id
- * @property Carbon|null $created_at
+ * @property int|null $syllabus_id
+ * @property string|null $code
+ * @property string $description
+ * @property int|null $bloom_level
  *
- * @property Syllabus $syllabus
+ * @property Syllabus|null $syllabus
  *
  * @package App\Models\Base\Base
  */
-class SyllabusOutcome extends Model
+class CourseObjective extends Model
 {
-	protected $table = 'syllabus_outcomes';
+	protected $table = 'course_objectives';
 	public $timestamps = false;
 
 	protected $casts = [
 		'syllabus_id' => 'int',
-		'outcome_id' => 'int'
+		'bloom_level' => 'int'
 	];
 
 	public function syllabus()
