@@ -16,7 +16,7 @@ class RoleRedirectService
 
             RoleName::PROGRAM_DIRECTOR->value,
             RoleName::LECTURER->value
-                => redirect()->route('syllabus.index'),
+                => redirect()->route('lecturer.dashboard'),
 
             default
                 => redirect()->route('account.chooseRole')

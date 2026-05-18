@@ -14,5 +14,5 @@ Route::get('/login', function () {
 
 require __DIR__ . '/authen.php';
 require __DIR__ . '/director.php';
-require __DIR__ . '/lecture.php';
+require __DIR__ . '/lecturer.php';
 require __DIR__ . '/admin.php';
