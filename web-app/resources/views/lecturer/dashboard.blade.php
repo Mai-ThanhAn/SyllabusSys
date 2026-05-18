@@ -28,7 +28,7 @@
                 <td>{{ $assignment->assignment_role }}</td>
                 <td>{{ $syllabus->status->status_name ?? 'N/A' }}</td>
                 <td>
-                    <a href="#">
+                    <a href="{{ route('lecturer.syllabuses.edit', $syllabus->id) }}">
                         Soạn đề cương
                     </a>
                 </td>
