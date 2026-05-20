@@ -13,6 +13,7 @@ class LecturerDashboardController extends Controller
         $assignments = SyllabusAssignment::with([
             'syllabus.course.program',
             'syllabus.status',
+            'syllabus.approvals',
         ])
             ->where('user_id', Auth::id())
             ->latest()

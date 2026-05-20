@@ -92,12 +92,32 @@ class SyllabusAuthoringController extends Controller
 
             $versionNumber = ($latestVersionNumber ?? 0) + 1;
 
+            $rejectedStatus = Status::where('status_name', 'Rejected')
+                ->first();
+
+            $lastRejectedVersion = null;
+
+            if ($rejectedStatus) {
+
+                $lastRejectedVersion = SyllabusVersion::where(
+                    'syllabus_id',
+                    $syllabus->id
+                )
+                    ->where(
+                        'status_id',
+                        $rejectedStatus->id
+                    )
+                    ->latest('id')
+                    ->first();
+            }
+
             $version = SyllabusVersion::create([
                 'syllabus_id' => $syllabus->id,
                 'version_number' => $versionNumber,
                 'created_by' => Auth::id(),
                 'status_id' => $submittedStatus->id,
                 'submission_type' => $versionNumber === 1 ? 'submitted' : 'resubmitted',
+                'base_version_id' => $lastRejectedVersion?->id,
                 'note' => 'Giảng viên gửi đề cương duyệt.',
             ]);
 

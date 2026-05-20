@@ -18,4 +18,15 @@ class Syllabus extends BaseSyllabus
     {
         return $this->hasMany(TeachingPlanItem::class);
     }
+    public function approvals()
+    {
+        return $this->hasManyThrough(
+            SyllabusApproval::class,
+            SyllabusVersion::class,
+            'syllabus_id',
+            'version_id',
+            'id',
+            'id'
+        );
+    }
 }
