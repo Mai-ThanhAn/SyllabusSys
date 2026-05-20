@@ -8,6 +8,15 @@ use App\Models\SyllabusAssignment;
 use App\Models\SyllabusContent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Status;
+use App\Models\SyllabusVersion;
+use App\Models\SyllabusVersionContent;
+use App\Models\SyllabusApproval;
+use App\Models\SyllabusVersionCourseObjective;
+use App\Models\SyllabusVersionCourseLearningOutcome;
+use App\Models\SyllabusVersionTeachingPlanItem;
+use App\Models\SyllabusVersionTeachingPlanCloMapping;
+use Illuminate\Support\Facades\DB;
 
 class SyllabusAuthoringController extends Controller
 {
@@ -21,6 +30,7 @@ class SyllabusAuthoringController extends Controller
             'contents.section',
             'ploTargets.programLearningOutcome',
             'piTargets.performanceIndicator',
+            'teachingPlanItems.cloMappings.clo',
         ])->findOrFail($syllabusId);
 
         $contents = $syllabus->contents
@@ -57,5 +67,101 @@ class SyllabusAuthoringController extends Controller
             ->exists();
 
         abort_unless($isAssigned, 403, 'Bạn không có quyền chỉnh sửa đề cương này.');
+    }
+    public function submitForApproval(int $syllabusId)
+    {
+        $this->ensureAssigned($syllabusId);
+
+        $syllabus = Syllabus::with([
+            'contents.section',
+            'courseObjectives',
+            'courseLearningOutcomes',
+            'teachingPlanItems.cloMappings.clo',
+        ])->findOrFail($syllabusId);
+
+        DB::transaction(function () use ($syllabus) {
+
+            $submittedStatus = Status::where('status_name', 'Submitted')
+                ->firstOrFail();
+
+            $pendingStatus = Status::where('status_name', 'Pending')
+                ->firstOrFail();
+
+            $latestVersionNumber = SyllabusVersion::where('syllabus_id', $syllabus->id)
+                ->max('version_number');
+
+            $versionNumber = ($latestVersionNumber ?? 0) + 1;
+
+            $version = SyllabusVersion::create([
+                'syllabus_id' => $syllabus->id,
+                'version_number' => $versionNumber,
+                'created_by' => Auth::id(),
+                'status_id' => $submittedStatus->id,
+                'submission_type' => $versionNumber === 1 ? 'submitted' : 'resubmitted',
+                'note' => 'Giảng viên gửi đề cương duyệt.',
+            ]);
+
+            foreach ($syllabus->contents as $content) {
+                SyllabusVersionContent::create([
+                    'version_id' => $version->id,
+                    'section_id' => $content->section_id,
+                    'content_html' => $content->content_html,
+                    'content_raw' => $content->content_raw,
+                ]);
+            }
+
+            foreach ($syllabus->courseObjectives as $co) {
+                SyllabusVersionCourseObjective::create([
+                    'version_id' => $version->id,
+                    'code' => $co->code,
+                    'description' => $co->description,
+                    'bloom_level' => $co->bloom_level,
+                ]);
+            }
+
+            foreach ($syllabus->courseLearningOutcomes as $clo) {
+                SyllabusVersionCourseLearningOutcome::create([
+                    'version_id' => $version->id,
+                    'code' => $clo->code,
+                    'description' => $clo->description,
+                    'bloom_level' => $clo->bloom_level,
+                ]);
+            }
+
+            foreach ($syllabus->teachingPlanItems as $item) {
+                $versionItem = SyllabusVersionTeachingPlanItem::create([
+                    'version_id' => $version->id,
+                    'item_order' => $item->item_order,
+                    'title' => $item->title,
+                    'content' => $item->content,
+                    'teaching_activities' => $item->teaching_activities,
+                    'learning_activities' => $item->learning_activities,
+                    'assessment_activities' => $item->assessment_activities,
+                ]);
+
+                foreach ($item->cloMappings as $mapping) {
+                    SyllabusVersionTeachingPlanCloMapping::create([
+                        'version_teaching_plan_item_id' => $versionItem->id,
+                        'clo_code' => $mapping->clo->code,
+                    ]);
+                }
+            }
+
+            SyllabusApproval::create([
+                'version_id' => $version->id,
+                'approved_by' => Auth::id(),
+                'status_id' => $pendingStatus->id,
+                'comment' => null,
+                'approved_at' => null,
+            ]);
+
+            $syllabus->update([
+                'status_id' => $submittedStatus->id,
+            ]);
+        });
+
+        return redirect()
+            ->route('lecturer.dashboard')
+            ->with('success', 'Đã gửi đề cương để duyệt.');
     }
 }

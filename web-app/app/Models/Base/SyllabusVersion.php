@@ -12,6 +12,9 @@ use App\Models\Base\Syllabus;
 use App\Models\Base\SyllabusApproval;
 use App\Models\Base\SyllabusHistory;
 use App\Models\Base\SyllabusVersionContent;
+use App\Models\Base\SyllabusVersionCourseLearningOutcome;
+use App\Models\Base\SyllabusVersionCourseObjective;
+use App\Models\Base\SyllabusVersionTeachingPlanItem;
 use App\Models\Base\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -39,6 +42,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusVersionContent[] $syllabus_version_contents
  * @property Collection|\App\Models\Base\SyllabusVersion[] $syllabus_versions
  * @property Collection|AiComplianceReport[] $ai_compliance_reports
+ * @property Collection|SyllabusVersionCourseObjective[] $syllabus_version_course_objectives
+ * @property Collection|SyllabusVersionCourseLearningOutcome[] $syllabus_version_course_learning_outcomes
+ * @property Collection|SyllabusVersionTeachingPlanItem[] $syllabus_version_teaching_plan_items
  *
  * @package App\Models\Base\Base
  */
@@ -98,5 +104,20 @@ class SyllabusVersion extends Model
 	public function ai_compliance_reports()
 	{
 		return $this->hasMany(AiComplianceReport::class, 'version_id');
+	}
+
+	public function syllabus_version_course_objectives()
+	{
+		return $this->hasMany(SyllabusVersionCourseObjective::class, 'version_id');
+	}
+
+	public function syllabus_version_course_learning_outcomes()
+	{
+		return $this->hasMany(SyllabusVersionCourseLearningOutcome::class, 'version_id');
+	}
+
+	public function syllabus_version_teaching_plan_items()
+	{
+		return $this->hasMany(SyllabusVersionTeachingPlanItem::class, 'version_id');
 	}
 }

@@ -20,6 +20,7 @@ use App\Models\Base\SyllabusPiTarget;
 use App\Models\Base\SyllabusPloTarget;
 use App\Models\Base\SyllabusTemplate;
 use App\Models\Base\SyllabusVersion;
+use App\Models\Base\TeachingPlanItem;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -53,6 +54,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusPloTarget[] $syllabus_plo_targets
  * @property Collection|SyllabusPiTarget[] $syllabus_pi_targets
  * @property Collection|SyllabusAssignment[] $syllabus_assignments
+ * @property Collection|TeachingPlanItem[] $teaching_plan_items
  *
  * @package App\Models\Base\Base
  */
@@ -137,5 +139,10 @@ class Syllabus extends Model
 	public function syllabus_assignments()
 	{
 		return $this->hasMany(SyllabusAssignment::class);
+	}
+
+	public function teaching_plan_items()
+	{
+		return $this->hasMany(TeachingPlanItem::class);
 	}
 }

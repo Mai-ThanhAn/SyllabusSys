@@ -8,6 +8,7 @@ namespace App\Models\Base;
 
 use App\Models\Base\CloPiMapping;
 use App\Models\Base\Syllabus;
+use App\Models\Base\TeachingPlanCloMapping;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Syllabus|null $syllabus
  * @property Collection|CloPiMapping[] $clo_pi_mappings
+ * @property Collection|TeachingPlanCloMapping[] $teaching_plan_clo_mappings
  *
  * @package App\Models\Base\Base
  */
@@ -43,5 +45,10 @@ class CourseLearningOutcome extends Model
 	public function clo_pi_mappings()
 	{
 		return $this->hasMany(CloPiMapping::class, 'clo_id');
+	}
+
+	public function teaching_plan_clo_mappings()
+	{
+		return $this->hasMany(TeachingPlanCloMapping::class, 'clo_id');
 	}
 }
