@@ -1,5 +1,31 @@
+# ENV
 .env
-.venv/
-ai-service/venv/
-env/
 ai-service/.env
+
+# Python venv
+venv/
+.venv/
+env/
+ai-service/venv/
+ai-service/.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Torch / HF cache
+.cache/
+huggingface/
+transformers_cache/
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
