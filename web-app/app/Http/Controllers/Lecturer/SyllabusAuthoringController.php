@@ -17,9 +17,21 @@ use App\Models\SyllabusVersionCourseLearningOutcome;
 use App\Models\SyllabusVersionTeachingPlanItem;
 use App\Models\SyllabusVersionTeachingPlanCloMapping;
 use Illuminate\Support\Facades\DB;
+use App\Services\Syllabus\SyllabusDiffService;
+use App\Services\AI\AIClient;
 
 class SyllabusAuthoringController extends Controller
 {
+    protected AIClient $aiClient;
+
+    protected SyllabusDiffService $diffService;
+    public function __construct(
+        AIClient $aiClient,
+        SyllabusDiffService $diffService
+    ) {
+        $this->aiClient = $aiClient;
+        $this->diffService = $diffService;
+    }
     public function edit(int $syllabusId)
     {
         $this->ensureAssigned($syllabusId);
@@ -73,6 +85,7 @@ class SyllabusAuthoringController extends Controller
         $this->ensureAssigned($syllabusId);
 
         $syllabus = Syllabus::with([
+            'course',
             'contents.section',
             'courseObjectives',
             'courseLearningOutcomes',
@@ -165,6 +178,41 @@ class SyllabusAuthoringController extends Controller
                         'clo_code' => $mapping->clo->code,
                     ]);
                 }
+            }
+
+            if ($lastRejectedVersion) {
+
+                $newVersion = SyllabusVersion::with([
+                    'contents.section',
+                    'courseObjectives',
+                    'courseLearningOutcomes',
+                    'teachingPlanItems',
+                ])->find($version->id);
+
+                $oldVersion = SyllabusVersion::with([
+                    'contents.section',
+                    'courseObjectives',
+                    'courseLearningOutcomes',
+                    'teachingPlanItems',
+                ])->find($lastRejectedVersion->id);
+
+                $diffPayload = [
+                    'course_name' => $syllabus->course->course_name,
+                    'from_version' => $oldVersion->version_number,
+                    'to_version' => $newVersion->version_number,
+                    'changes' => $this->diffService->buildDiff(
+                        $oldVersion,
+                        $newVersion
+                    ),
+                ];
+
+                $summary = $this->aiClient->generateSmartDiff(
+                    $diffPayload
+                );
+
+                $version->update([
+                    'ai_change_summary' => $summary
+                ]);
             }
 
             SyllabusApproval::create([

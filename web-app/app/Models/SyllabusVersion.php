@@ -6,6 +6,9 @@ use App\Models\Base\SyllabusVersion as BaseSyllabusVersion;
 
 class SyllabusVersion extends BaseSyllabusVersion
 {
+    protected $casts = [
+        'ai_change_summary' => 'array',
+    ];
     public function syllabus()
     {
         return $this->belongsTo(Syllabus::class);

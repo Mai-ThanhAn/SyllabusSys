@@ -122,6 +122,35 @@
 
 <hr>
 
+@if(!empty($version->ai_change_summary))
+    <hr>
+
+    <h3>AI Smart Diff - Tóm tắt thay đổi</h3>
+
+    <p>
+        <strong>Tóm tắt:</strong>
+        {{ $version->ai_change_summary['summary'] ?? 'Không có' }}
+    </p>
+
+    @if(!empty($version->ai_change_summary['important_changes']))
+        <p><strong>Thay đổi quan trọng:</strong></p>
+        <ul>
+            @foreach($version->ai_change_summary['important_changes'] as $change)
+                <li>{{ $change }}</li>
+            @endforeach
+        </ul>
+    @endif
+
+    @if(!empty($version->ai_change_summary['risk_notes']))
+        <p><strong>Lưu ý rủi ro:</strong></p>
+        <ul>
+            @foreach($version->ai_change_summary['risk_notes'] as $risk)
+                <li>{{ $risk }}</li>
+            @endforeach
+        </ul>
+    @endif
+@endif
+
 <h3>Duyệt đề cương</h3>
 
 <form method="POST" action="{{ route('program-director.syllabus-approvals.approve', $approval->id) }}" style="display:inline">

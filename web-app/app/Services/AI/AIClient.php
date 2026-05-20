@@ -36,11 +36,16 @@ class AIClient
         if (!$response->successful()) {
             throw new \Exception(
                 $response->json('details')
-                ?? $response->json('error')
-                ?? 'AI service error'
+                    ?? $response->json('error')
+                    ?? 'AI service error'
             );
         }
 
         return $response->json();
+    }
+
+    public function generateSmartDiff(array $payload): array
+    {
+        return $this->post('/api/ai/generate-smart-diff', $payload);
     }
 }
