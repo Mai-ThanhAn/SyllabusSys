@@ -45,11 +45,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusContent[] $syllabus_contents
  * @property Collection|SyllabusHistory[] $syllabus_histories
  * @property Collection|SyllabusOutcome[] $syllabus_outcomes
- * @property Collection|SyllabusVersion[] $syllabus_versions
  * @property Collection|ApprovedSyllabusCorpu[] $approved_syllabus_corpus
  * @property Collection|CourseObjective[] $course_objectives
  * @property Collection|CourseLearningOutcome[] $course_learning_outcomes
  * @property Collection|AiGenerationLog[] $ai_generation_logs
+ * @property Collection|SyllabusVersion[] $syllabus_versions
  * @property Collection|AiComplianceReport[] $ai_compliance_reports
  * @property Collection|SyllabusPloTarget[] $syllabus_plo_targets
  * @property Collection|SyllabusPiTarget[] $syllabus_pi_targets
@@ -96,11 +96,6 @@ class Syllabus extends Model
 		return $this->hasMany(SyllabusOutcome::class);
 	}
 
-	public function syllabus_versions()
-	{
-		return $this->hasMany(SyllabusVersion::class);
-	}
-
 	public function approved_syllabus_corpus()
 	{
 		return $this->hasMany(ApprovedSyllabusCorpu::class);
@@ -119,6 +114,11 @@ class Syllabus extends Model
 	public function ai_generation_logs()
 	{
 		return $this->hasMany(AiGenerationLog::class);
+	}
+
+	public function syllabus_versions()
+	{
+		return $this->hasMany(SyllabusVersion::class);
 	}
 
 	public function ai_compliance_reports()

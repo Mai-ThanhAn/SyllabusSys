@@ -44,7 +44,7 @@ class SyllabusAuthoringController extends Controller
             'piTargets.performanceIndicator',
             'teachingPlanItems.cloMappings.clo',
         ])->findOrFail($syllabusId);
-
+        $this->ensureEditable($syllabus);
         $contents = $syllabus->contents
             ->sortBy(fn($content) => $content->section->display_order ?? 999);
 
@@ -54,7 +54,8 @@ class SyllabusAuthoringController extends Controller
     public function update(Request $request, int $syllabusId)
     {
         $this->ensureAssigned($syllabusId);
-
+        $syllabus = Syllabus::with('status')->findOrFail($syllabusId);
+        $this->ensureEditable($syllabus);
         $request->validate([
             'contents' => 'required|array',
             'contents.*' => 'nullable|string',
@@ -231,5 +232,16 @@ class SyllabusAuthoringController extends Controller
         return redirect()
             ->route('lecturer.dashboard')
             ->with('success', 'Đã gửi đề cương để duyệt.');
+    }
+
+    private function ensureEditable(Syllabus $syllabus): void
+    {
+        $statusName = $syllabus->status->status_name ?? null;
+
+        abort_if(
+            in_array($statusName, ['Submitted', 'Approved']),
+            403,
+            'Đề cương đang chờ duyệt hoặc đã được duyệt, không thể chỉnh sửa.'
+        );
     }
 }

@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $university_id
  * @property int|null $department_id
  * @property int|null $program_id
+ * @property string|null $password
  *
  * @property Collection|InstructorCourse[] $instructor_courses
  * @property Collection|SyllabusApproval[] $syllabus_approvals

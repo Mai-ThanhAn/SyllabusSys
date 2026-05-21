@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $base_version_id
  * @property int|null $status_id
  * @property string|null $note
+ * @property string|null $ai_change_summary
  *
  * @property Syllabus $syllabus
  * @property User|null $user
@@ -58,7 +59,8 @@ class SyllabusVersion extends Model
 		'version_number' => 'int',
 		'created_by' => 'int',
 		'base_version_id' => 'int',
-		'status_id' => 'int'
+		'status_id' => 'int',
+		'ai_change_summary' => 'binary'
 	];
 
 	public function syllabus()

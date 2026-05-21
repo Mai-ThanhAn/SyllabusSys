@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool|null $is_required
  * @property int $template_id
  * @property bool|null $is_ai_generatable
+ * @property string|null $input_type
+ * @property bool|null $is_editable
  *
  * @property SyllabusTemplate $syllabus_template
  * @property Collection|SectionOutcomeSuggestion[] $section_outcome_suggestions
@@ -40,7 +42,8 @@ class SyllabusSection extends Model
 		'display_order' => 'int',
 		'is_required' => 'bool',
 		'template_id' => 'int',
-		'is_ai_generatable' => 'bool'
+		'is_ai_generatable' => 'bool',
+		'is_editable' => 'bool'
 	];
 
 	public function syllabus_template()
