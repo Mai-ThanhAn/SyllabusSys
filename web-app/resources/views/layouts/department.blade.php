@@ -226,7 +226,7 @@
                     <span class="material-symbols-outlined">settings</span>
                 </button>
             </div>
-            <div class="h-8 w-[1px] bg-outline-variant/20 mx-2"></div>
+            <div class="h-8 w-px bg-outline-variant/20 mx-2"></div>
             <div class="flex items-center gap-3">
                 <div class="text-right">
                     <p class="text-sm font-bold text-on-surface leading-tight">Admin User</p>

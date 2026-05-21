@@ -77,7 +77,7 @@
 
         <!-- Table Container -->
         <div class="glass-panel border border-outline-variant/10 rounded-2xl overflow-hidden shadow-2xl relative">
-            <div class="absolute inset-0 bg-gradient-to-br from-primary-container/5 via-transparent to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-linear-to-br from-primary-container/5 via-transparent to-transparent pointer-events-none"></div>
             <div class="overflow-x-auto no-scrollbar">
                 <table class="w-full border-collapse text-left">
                     <thead>

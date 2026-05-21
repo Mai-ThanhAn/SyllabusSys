@@ -112,7 +112,7 @@
                         <p class="text-tertiary"><span class="text-outline/40 mr-2">[14:02:03]</span> [READY] Orchestration layer active. Waiting for input stream.</p>
                         <p class="text-primary-container/80" id="terminal-cursor"><span class="text-outline/40 mr-2">[14:02:04]</span> [STATUS] Synchronized <span class="animate-pulse">_</span></p>
                     </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary-container/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="absolute inset-0 bg-linear-to-t from-primary-container/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
             </div>
 
@@ -134,7 +134,7 @@
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input class="sr-only peer" name="is_required" type="checkbox" @checked($section->is_required)>
-                                <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+                                <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
                             </label>
                         </div>
 
@@ -148,7 +148,7 @@
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input class="sr-only peer" name="is_editable" type="checkbox" @checked($section->is_editable)>
-                                <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+                                <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
                             </label>
                         </div>
 
@@ -157,7 +157,7 @@
                         <!-- Toggle: AI Synthesis -->
                         <div class="flex items-center justify-between group">
                             <div class="max-w-[70%]">
-                                <label class="block text-sm font-semibold text-primary flex items-center gap-1.5">
+                                <label class="block text-sm font-semibold text-primary items-center gap-1.5">
                                     AI Synthesis
                                     <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
                                 </label>
@@ -165,7 +165,7 @@
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input class="sr-only peer" name="is_ai_generatable" type="checkbox" @checked($section->is_ai_generatable)>
-                                <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+                                <div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
                             </label>
                         </div>
                     </div>

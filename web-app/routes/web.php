@@ -16,5 +16,6 @@ require __DIR__ . '/authen.php';
 require __DIR__ . '/programdirector.php';
 require __DIR__ . '/lecturer.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/universityadmin.php';
 require __DIR__ . '/department.php';
 

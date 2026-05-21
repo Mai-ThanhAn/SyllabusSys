@@ -27,7 +27,7 @@ class SyllabusApprovalController extends Controller
         return view('program_director.syllabus_approvals.index', compact('approvals'));
     }
 
-    public function show(int $id)
+    public function show($id)
     {
         $approval = SyllabusApproval::with([
             'version.syllabus.course.program',
@@ -40,7 +40,7 @@ class SyllabusApprovalController extends Controller
         return view('program_director.syllabus_approvals.show', compact('approval'));
     }
 
-    public function approve(int $id)
+    public function approve( $id)
     {
         $approval = SyllabusApproval::with('version.syllabus')
             ->findOrFail($id);
@@ -68,7 +68,7 @@ class SyllabusApprovalController extends Controller
             ->with('success', 'Đã duyệt đề cương.');
     }
 
-    public function reject(Request $request, int $id)
+    public function reject(Request $request, $id)
     {
         $request->validate([
             'comment' => 'required|string',

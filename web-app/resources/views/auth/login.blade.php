@@ -150,14 +150,14 @@
     <main class="relative min-h-screen flex items-center justify-center p-6">
         <!-- Ambient Grid & Laboratory Atmosphere -->
         <div class="absolute inset-0 bg-grid pointer-events-none"></div>
-        <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary-container/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-0 left-1/4 w-125 h-125 bg-primary-container/5 blur-[120px] rounded-full pointer-events-none"></div>
 
         <!-- Login Container -->
         <div class="relative w-full max-w-md z-10">
             <!-- Technical Watermark / Logo -->
             <div class="flex flex-col items-center mb-10">
                 <div class="w-16 h-16 mb-6 rounded-xl bg-surface-container border border-outline-variant/20 flex items-center justify-center relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="absolute inset-0 bg-linear-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <span class="material-symbols-outlined text-primary-fixed-dim text-3xl" style="font-variation-settings: 'FILL' 1;">biotech</span>
                     <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary/40"></div>
                     <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary/40"></div>
@@ -180,7 +180,7 @@
 
             <!-- Auth Card -->
             <div class="bg-surface-container-low/80 backdrop-blur-xl rounded-2xl border border-outline-variant/10 p-8 shadow-2xl overflow-hidden relative">
-                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
+                <div class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-outline-variant/30 to-transparent"></div>
 
                 <form action="{{ route('login.post') }}" class="space-y-6" method="POST">
                     @csrf
@@ -241,7 +241,7 @@
                         <button class="w-full py-4 rounded-xl bg-primary-container text-on-primary-container font-label uppercase tracking-[0.2em] text-xs font-bold shadow-extruded transition-all flex items-center justify-center gap-3 group relative overflow-hidden" type="submit">
                             <span class="relative z-10">Đăng Nhập</span>
                             <span class="material-symbols-outlined text-sm relative z-10 group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
-                            <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                            <div class="absolute inset-0 bg-linear-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                         </button>
                     </div>
                 </form>

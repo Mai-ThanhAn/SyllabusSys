@@ -7,6 +7,7 @@
 namespace App\Models\Base;
 
 use App\Models\Base\ApprovalRequest;
+use App\Models\Base\Department;
 use App\Models\Base\InstructorCourse;
 use App\Models\Base\Role;
 use App\Models\Base\SyllabusApproval;
@@ -42,6 +43,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusHistory[] $syllabus_histories
  * @property Collection|Role[] $roles
  * @property Collection|ApprovalRequest[] $approval_requests
+ * @property Collection|Department[] $departments
  * @property Collection|SyllabusVersion[] $syllabus_versions
  * @property Collection|SyllabusAssignment[] $syllabus_assignments
  *
@@ -89,6 +91,11 @@ class User extends Model
 	public function approval_requests()
 	{
 		return $this->hasMany(ApprovalRequest::class, 'approved_by');
+	}
+
+	public function departments()
+	{
+		return $this->hasMany(Department::class, 'head_user_id');
 	}
 
 	public function syllabus_versions()

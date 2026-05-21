@@ -108,11 +108,11 @@
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary overflow-x-hidden">
     <!-- Ambient Lighting Effects -->
-    <div class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary rounded-full glow-ambient"></div>
-    <div class="fixed bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-secondary-container rounded-full glow-ambient"></div>
+    <div class="fixed top-[-10%] right-[-10%] w-125 h-125 bg-primary rounded-full glow-ambient"></div>
+    <div class="fixed bottom-[-10%] left-[20%] w-150 h-150 bg-secondary-container rounded-full glow-ambient"></div>
 
     <!-- SideNavBar (Shared Component) -->
-    <aside class="fixed left-0 top-0 h-full flex flex-col h-screen w-64 bg-[#0e0e0f] border-r border-[#454652]/20 z-50">
+    <aside class="fixed left-0 top-0 flex flex-col h-screen w-64 bg-[#0e0e0f] border-r border-[#454652]/20 z-50">
         <div class="p-6 mb-4">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shadow-lg">
@@ -175,7 +175,7 @@
                 <button class="w-10 h-10 flex items-center justify-center rounded-full text-outline hover:bg-[#353436]/40 transition-colors">
                     <span class="material-symbols-outlined">help_outline</span>
                 </button>
-                <div class="h-8 w-[1px] bg-outline-variant/20 mx-2"></div>
+                <div class="h-8 w-px bg-outline-variant/20 mx-2"></div>
                 <div class="flex items-center gap-3 pl-2">
                     <div class="text-right hidden sm:block">
                         <p class="text-xs font-semibold text-on-surface leading-none">{{ Auth::user()->full_name ?? 'Nguyễn Giảng Viên' }}</p>

@@ -41,7 +41,7 @@ class TestLoginController extends Controller
             'Lecturer' => redirect()->route('lecturer.dashboard'),
             'Program_Director' => redirect()->route('program_director.syllabus_shells.create'),
             'Department_Admin' => redirect()->route('department.syllabus-templates.index'),
-            'University_Admin' => redirect('/admin/courses'),
+            'University_Admin' => redirect()->route('university-admin.dashboard'),
             'Superadmin' => redirect('/admin/courses'),
             default => redirect('/')->with('error', 'Tài khoản chưa có quyền phù hợp.'),
         };

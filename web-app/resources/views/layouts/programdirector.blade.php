@@ -145,7 +145,7 @@
                         <span class="material-symbols-outlined">terminal</span>
                     </button>
                 </div>
-                <div class="h-8 w-[1px] bg-outline-variant/20"></div>
+                <div class="h-8 w-px bg-outline-variant/20"></div>
                 <div class="flex items-center gap-3 group cursor-pointer">
                     <div class="text-right">
                         <div class="text-[10px] font-label uppercase tracking-widest text-on-surface">PROGRAM DIRECTOR</div>

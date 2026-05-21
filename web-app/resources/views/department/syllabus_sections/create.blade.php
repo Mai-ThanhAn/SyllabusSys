@@ -225,8 +225,8 @@
 </main>
 
 <!-- Ambient Lighting Effect -->
-<div class="fixed bottom-0 right-0 w-[500px] h-[500px] bg-primary-container/5 blur-[120px] rounded-full pointer-events-none -z-10"></div>
-<div class="fixed top-0 left-0 w-[300px] h-[300px] bg-secondary-container/5 blur-[100px] rounded-full pointer-events-none -z-10"></div>
+<div class="fixed bottom-0 right-0 w-125 h-125 bg-primary-container/5 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+<div class="fixed top-0 left-0 w-75 h-75 bg-secondary-container/5 blur-[100px] rounded-full pointer-events-none -z-10"></div>
 @endsection
 
 @push('scripts')
