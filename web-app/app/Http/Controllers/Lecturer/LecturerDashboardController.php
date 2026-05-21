@@ -16,7 +16,7 @@ class LecturerDashboardController extends Controller
             'syllabus.approvals',
         ])
             ->where('user_id', Auth::id())
-            ->latest()
+            ->latest('id')
             ->get();
 
         return view('lecturer.dashboard', compact('assignments'));

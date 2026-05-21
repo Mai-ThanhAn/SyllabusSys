@@ -18,12 +18,12 @@ Route::prefix('program-director')
         Route::get('/syllabus-shells/create', [
             SyllabusShellController::class,
             'create'
-        ])->name('program-director.syllabus-shells.create');
+        ])->name('program_director.syllabus_shells.create');
 
         Route::post('/syllabus-shells', [
             SyllabusShellController::class,
             'store'
-        ])->name('program-director.syllabus-shells.store');
+        ])->name('program_director.syllabus_shells.store');
 
         /*
         |--------------------------------------------------------------------------
@@ -34,20 +34,20 @@ Route::prefix('program-director')
         Route::get('/syllabus-approvals', [
             SyllabusApprovalController::class,
             'index'
-        ])->name('program-director.syllabus-approvals.index');
+        ])->name('program_director.syllabus_approvals.index');
 
         Route::get('/syllabus-approvals/{id}', [
             SyllabusApprovalController::class,
             'show'
-        ])->name('program-director.syllabus-approvals.show');
+        ])->name('program_director.syllabus_approvals.show');
 
         Route::post('/syllabus-approvals/{id}/approve', [
             SyllabusApprovalController::class,
             'approve'
-        ])->name('program-director.syllabus-approvals.approve');
+        ])->name('program_director.syllabus_approvals.approve');
 
         Route::post('/syllabus-approvals/{id}/reject', [
             SyllabusApprovalController::class,
             'reject'
-        ])->name('program-director.syllabus-approvals.reject');
+        ])->name('program_director.syllabus_approvals.reject');
     });

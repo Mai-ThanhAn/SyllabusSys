@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Enums\RoleName;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +39,7 @@ class TestLoginController extends Controller
 
         return match ($role) {
             'Lecturer' => redirect()->route('lecturer.dashboard'),
-            'Program_Director' => redirect()->route('program-director.syllabus-shells.create'),
+            'Program_Director' => redirect()->route('program_director.syllabus_shells.create'),
             'Department_Admin' => redirect()->route('department.syllabus-templates.index'),
             'University_Admin' => redirect('/admin/courses'),
             'Superadmin' => redirect('/admin/courses'),
