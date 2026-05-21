@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.program_director')
+
 
 @section('title', 'Danh sách đề cương chờ duyệt | Syllabus Lab')
 
@@ -63,7 +64,7 @@
                     <span class="material-symbols-outlined text-sm">filter_list</span>
                     Bộ lọc
                 </button>
-                <a href="{{ route('program-director.syllabus-shells.create') }}" class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 shadow-extruded hover:brightness-110 active:scale-95 transition-all">
+                <a href="{{ route('program_director.syllabus_shells.create') }}" class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 shadow-extruded hover:brightness-110 active:scale-95 transition-all">
                     <span class="material-symbols-outlined text-sm">add</span>
                     New Orchestration
                 </a>

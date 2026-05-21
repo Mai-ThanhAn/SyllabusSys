@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProgramDirector\SyllabusShellController;
 use App\Http\Controllers\ProgramDirector\SyllabusApprovalController;
+use App\Http\Controllers\ProgramDirector\DashboardController;
+
 
 Route::prefix('program-director')
     ->middleware(['auth'])
@@ -50,4 +52,13 @@ Route::prefix('program-director')
             SyllabusApprovalController::class,
             'reject'
         ])->name('program_director.syllabus_approvals.reject');
+
+        Route::get('/syllabus-shells', [
+            SyllabusShellController::class,
+            'index'
+        ])->name('program_director.syllabus_shells.index');
+
+
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('program_director.dashboard');
     });

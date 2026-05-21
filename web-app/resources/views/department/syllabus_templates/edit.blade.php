@@ -3,7 +3,58 @@
 @section('title', 'Sửa khung đề cương | TechSyllabus')
 
 @section('content')
-<main class="ml-64 p-8 min-h-[calc(100vh-72px)] flex items-center justify-center">
+<style>
+    /* Force dark theme for this page */
+    .technical-grid {
+        background: #0a0a0c;
+        background-image:
+            linear-gradient(rgba(94, 106, 210, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(94, 106, 210, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    .surface-container {
+        background: rgba(28, 27, 29, 0.8);
+        backdrop-filter: blur(10px);
+    }
+
+    .surface-container-low {
+        background: rgba(28, 27, 29, 0.6);
+    }
+
+    .surface-container-lowest {
+        background: rgba(32, 31, 33, 0.95);
+    }
+
+    .surface-container-high {
+        background: rgba(40, 39, 42, 0.9);
+    }
+
+    .text-on-surface {
+        color: #e6e6e6;
+    }
+
+    .text-on-surface-variant {
+        color: #a1a1aa;
+    }
+
+    .text-outline {
+        color: #71717a;
+    }
+
+    .border-outline-variant\/10 {
+        border-color: rgba(113, 113, 122, 0.1);
+    }
+
+    .border-outline-variant\/20 {
+        border-color: rgba(113, 113, 122, 0.2);
+    }
+
+    body, main {
+        background: #0a0a0c;
+    }
+</style>
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
     <div class="w-full max-w-2xl">
         <!-- Breadcrumbs -->
         <div class="flex items-center gap-2 mb-4 text-on-surface-variant">
@@ -110,8 +161,8 @@
         <!-- Meta Information Card -->
         <div class="mt-6 grid grid-cols-3 gap-4">
             <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/5">
-                <p class="font-label text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">ID Hệ thống</p>
-                <p class="text-xs font-mono text-primary">#TMP-{{ str_pad($template->id, 4, '0', STR_PAD_LEFT) }}-2024</p>
+                <p class="font-label text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Mã Khung Đề Cương</p>
+                <p class="text-xs font-mono text-primary">ID: {{ str_pad($template->id, 4, '0', STR_PAD_LEFT) }}</p>
             </div>
             <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/5">
                 <p class="font-label text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Cập nhật cuối</p>

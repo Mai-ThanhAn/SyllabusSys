@@ -1,4 +1,4 @@
-@extends('layouts.programdirector')
+@extends('layouts.program_director')
 
 @section('title', 'Tạo khung đề cương & Phân công | Syllabus Lab')
 
@@ -97,24 +97,9 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Terminal Style AI Preview -->
-            <div class="bg-surface-container-lowest p-6 rounded-xl border-l-2 border-primary shadow-inset-deep">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="text-label-md font-label uppercase tracking-widest text-primary flex items-center gap-2">
-                        <span class="material-symbols-outlined text-sm">terminal</span>
-                        System Heuristics
-                    </div>
-                    <span class="text-[10px] font-label text-outline opacity-50">SYNC: 100%</span>
-                </div>
-                <p class="text-body-md text-on-surface-variant font-body leading-relaxed opacity-80">
-                    Waiting for input parameters... Select a <span class="text-primary-fixed-dim">Course</span> and <span class="text-primary-fixed-dim">Template</span> to generate automatic alignment suggestions based on historical performance data and accreditation standards.
-                </p>
             </div>
         </div>
 

@@ -20,6 +20,6 @@ Route::prefix('university-admin')
         Route::resource('departments', DepartmentController::class)
             ->names('university-admin.departments');
 
-        // Route::post('/departments/{departmentId}/assign-head', [DepartmentController::class, 'assignHead'])
-        //     ->name('university-admin.departments.assignHead');
+        Route::post('/departments/{departmentId}/assign-head', [DepartmentController::class, 'assignHead'])
+            ->name('university-admin.departments.assignHead');
     });

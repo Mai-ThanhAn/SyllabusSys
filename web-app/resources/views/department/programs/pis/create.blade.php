@@ -54,7 +54,7 @@
                     <div class="absolute top-0 right-0 p-4 opacity-10">
                         <span class="material-symbols-outlined text-9xl">terminal</span>
                     </div>
-                    <form action="{{ route('programs.plos.pis.store', [$program->id, $plo->id]) }}" class="space-y-8 relative z-10" method="POST">
+                    <form action="{{ route('department.programs.plos.pis.store', [$program->id, $plo->id]) }}" class="space-y-8 relative z-10" method="POST">
                         @csrf
 
                         <!-- Field 1: Mã PI -->

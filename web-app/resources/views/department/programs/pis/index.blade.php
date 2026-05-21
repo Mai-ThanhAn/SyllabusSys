@@ -48,7 +48,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div class="space-y-2">
                 <div class="flex items-center gap-2 mb-1">
-                    <a href="{{ route('programs.plos.index', $program->id) }}" class="text-[11px] font-label uppercase tracking-[0.2em] text-outline hover:text-primary transition-colors flex items-center gap-1">
+                    <a href="{{ route('department.programs.plos.index', $program->id) }}" class="text-[11px] font-label uppercase tracking-[0.2em] text-outline hover:text-primary transition-colors flex items-center gap-1">
                         <span class="material-symbols-outlined text-sm">arrow_back</span>
                         Quay lại PLO
                     </a>
@@ -65,7 +65,7 @@
                     </p>
                 </div>
             </div>
-            <a href="{{ route('programs.plos.pis.create', [$program->id, $plo->id]) }}" class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg shadow-extruded active:translate-y-1 active:shadow-none transition-all hover:brightness-110">
+            <a href="{{ route('department.programs.plos.pis.create', [$program->id, $plo->id]) }}" class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg shadow-extruded active:translate-y-1 active:shadow-none transition-all hover:brightness-110">
                 <span class="material-symbols-outlined text-xl">add</span>
                 <span>Thêm PI</span>
             </a>

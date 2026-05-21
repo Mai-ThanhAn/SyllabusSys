@@ -8,7 +8,7 @@
     <!-- Breadcrumbs & Title -->
     <div class="mb-8">
         <nav class="flex items-center gap-2 text-[10px] font-label uppercase tracking-widest text-on-surface-variant mb-2">
-            <a class="hover:text-primary transition-colors" href="{{ route('program-director.dashboard') }}">Orchestrator</a>
+            <a class="hover:text-primary transition-colors" href="{{ route('program_director.dashboard') }}">Orchestrator</a>
             <span class="material-symbols-outlined text-[10px]">chevron_right</span>
             <a class="hover:text-primary transition-colors" href="{{ route('program-director.syllabus-approvals.index') }}">Approvals</a>
             <span class="material-symbols-outlined text-[10px]">chevron_right</span>

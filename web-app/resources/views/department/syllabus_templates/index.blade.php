@@ -3,6 +3,57 @@
 @section('title', 'Quản lý khung đề cương | TechSyllabus')
 
 @section('content')
+<style>
+    /* Force dark theme for this page */
+    .technical-grid {
+        background: #0a0a0c;
+        background-image:
+            linear-gradient(rgba(94, 106, 210, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(94, 106, 210, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    .surface-container {
+        background: rgba(28, 27, 29, 0.8);
+        backdrop-filter: blur(10px);
+    }
+
+    .surface-container-low {
+        background: rgba(28, 27, 29, 0.6);
+    }
+
+    .surface-container-lowest {
+        background: rgba(32, 31, 33, 0.95);
+    }
+
+    .surface-container-high {
+        background: rgba(40, 39, 42, 0.9);
+    }
+
+    .text-on-surface {
+        color: #e6e6e6;
+    }
+
+    .text-on-surface-variant {
+        color: #a1a1aa;
+    }
+
+    .text-outline {
+        color: #71717a;
+    }
+
+    .border-outline-variant\/10 {
+        border-color: rgba(113, 113, 122, 0.1);
+    }
+
+    .border-outline-variant\/20 {
+        border-color: rgba(113, 113, 122, 0.2);
+    }
+
+    body, main {
+        background: #0a0a0c;
+    }
+</style>
 <!-- Header & Action Row -->
 <section class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
     <div>
@@ -12,7 +63,7 @@
             <span class="text-on-surface-variant">Templates</span>
         </nav>
         <h2 class="text-display-lg font-bold text-on-surface tracking-tighter leading-none">Quản lý khung đề cương</h2>
-        <p class="text-on-surface-variant mt-3 max-w-2xl font-body">Hệ thống quản lý cấu trúc khung đề cương kỹ thuật cao. Cho phép định nghĩa, chỉnh sửa và ánh xạ các tiêu chuẩn đào tạo academic.</p>
+        <p class="text-on-surface-variant mt-3 max-w-2xl font-body">bạn chỉ có thể quản lý các đề cương mình quản lý.</p>
     </div>
     <div>
         <a href="{{ route('department.syllabus-templates.create') }}" class="group flex items-center gap-3 px-6 py-3 bg-primary text-on-primary rounded-lg font-bold text-sm shadow-extruded hover:brightness-110 active:scale-95 transition-all">

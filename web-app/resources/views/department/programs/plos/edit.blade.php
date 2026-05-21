@@ -85,7 +85,7 @@
                     <!-- Actions -->
                     <div class="flex items-center justify-between pt-6 border-t border-outline-variant/10">
                         <a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface text-sm font-medium transition-colors"
-                           href="{{ route('programs.plos.index', $program->id) }}">
+                           href="{{ route('department.programs.plos.index', $program->id) }}">
                             <span class="material-symbols-outlined text-lg">arrow_back</span>
                             Quay lại
                         </a>

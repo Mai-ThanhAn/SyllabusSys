@@ -41,7 +41,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('programs.plos.store', $program->id) }}" class="space-y-8" method="POST">
+                    <form action="{{ route('department.programs.plos.store', $program->id) }}" class="space-y-8" method="POST">
                         @csrf
 
                         <!-- PLO Code Field -->

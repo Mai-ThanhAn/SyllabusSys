@@ -3,34 +3,53 @@
 namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
+use App\Models\Program;
 use App\Models\SyllabusTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SyllabusTemplateController extends Controller
 {
     public function index()
     {
-        $templates = SyllabusTemplate::latest()->get();
+        $templates = SyllabusTemplate::where(
+            'department_id',
+            Auth::user()->department_id
+        )
+            ->latest('id')
+            ->get();
 
         return view('department.syllabus_templates.index', compact('templates'));
     }
 
     public function create()
     {
-        return view('department.syllabus_templates.create');
+        $programs = Program::where(
+            'department_id',
+            Auth::user()->department_id
+        )
+            ->orderBy('name')
+            ->get();
+
+        return view(
+            'department.syllabus_templates.create',
+            compact('programs')
+        );
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'template_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'program_id' => 'required|exists:programs,id',
         ]);
 
         SyllabusTemplate::create([
             'template_name' => $request->template_name,
             'description' => $request->description,
             'is_active' => $request->has('is_active'),
+            'department_id' => Auth::user()->department_id,
+            'program_id' => $request->program_id,
         ]);
 
         return redirect()

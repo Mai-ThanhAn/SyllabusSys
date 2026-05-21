@@ -3,6 +3,58 @@
 @section('title', 'Quản lý section | TechSyllabus')
 
 @section('content')
+   <style>
+        /* Force dark theme for this page */
+        .technical-grid {
+            background: #0a0a0c;
+            background-image:
+                linear-gradient(rgba(94, 106, 210, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(94, 106, 210, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .surface-container {
+            background: rgba(28, 27, 29, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .surface-container-low {
+            background: rgba(28, 27, 29, 0.6);
+        }
+
+        .surface-container-lowest {
+            background: rgba(32, 31, 33, 0.95);
+        }
+
+        .surface-container-high {
+            background: rgba(40, 39, 42, 0.9);
+        }
+
+        .text-on-surface {
+            color: #e6e6e6;
+        }
+
+        .text-on-surface-variant {
+            color: #a1a1aa;
+        }
+
+        .text-outline {
+            color: #71717a;
+        }
+
+        .border-outline-variant\/10 {
+            border-color: rgba(113, 113, 122, 0.1);
+        }
+
+        .border-outline-variant\/20 {
+            border-color: rgba(113, 113, 122, 0.2);
+        }
+
+        body,
+        main {
+            background: #0a0a0c;
+        }
+    </style>
 <main class="pl-64 min-h-screen relative z-10 technical-grid">
     <!-- Top App Bar Shell -->
     <header class="fixed top-0 right-0 left-64 flex items-center justify-between px-8 z-40 bg-[#131315]/80 backdrop-blur-xl border-b border-[#454652]/10 w-auto h-16">
@@ -168,60 +220,6 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
-
-            <!-- Footer Infrastructure -->
-            <div class="px-6 py-4 bg-surface-container-lowest/30 border-t border-outline-variant/10 flex items-center justify-between">
-                <p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">
-                    Total Modules: <span class="text-primary font-bold">{{ $sections->count() }}</span>
-                </p>
-                <div class="flex items-center gap-1">
-                    <button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">first_page</span></button>
-                    <button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">chevron_left</span></button>
-                    <div class="px-3 text-[10px] font-label text-on-surface-variant">PAGINATION: 01 / 01</div>
-                    <button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">chevron_right</span></button>
-                    <button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">last_page</span></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Technical Metadata Footer -->
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/5">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="material-symbols-outlined text-primary text-sm">hub</span>
-                    <h4 class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant">System Integrity</h4>
-                </div>
-                <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
-                    <div class="h-full bg-primary w-[94%] shadow-[0_0_8px_rgba(189,194,255,0.4)]"></div>
-                </div>
-                <p class="mt-2 text-[10px] font-label text-right opacity-60">STABLE: 94% OPTIMIZED</p>
-            </div>
-            <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/5">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="material-symbols-outlined text-secondary text-sm">memory</span>
-                    <h4 class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Compute Cycles</h4>
-                </div>
-                <div class="flex items-end gap-1 h-6">
-                    <div class="w-2 bg-secondary/20 h-2 rounded-t-sm"></div>
-                    <div class="w-2 bg-secondary/40 h-4 rounded-t-sm"></div>
-                    <div class="w-2 bg-secondary/60 h-3 rounded-t-sm"></div>
-                    <div class="w-2 bg-secondary h-6 rounded-t-sm animate-pulse"></div>
-                    <div class="w-2 bg-secondary/50 h-2 rounded-t-sm"></div>
-                </div>
-                <p class="mt-2 text-[10px] font-label text-right opacity-60">ACTIVE: 12ms RESPONSE</p>
-            </div>
-            <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/5">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="material-symbols-outlined text-error text-sm">verified_user</span>
-                    <h4 class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Access Logs</h4>
-                </div>
-                <div class="flex -space-x-2">
-                    <div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-variant flex items-center justify-center text-[8px]">JD</div>
-                    <div class="w-6 h-6 rounded-full border-2 border-surface bg-primary flex items-center justify-center text-[8px]">AM</div>
-                    <div class="w-6 h-6 rounded-full border-2 border-surface bg-secondary flex items-center justify-center text-[8px]">+3</div>
-                </div>
-                <p class="mt-2 text-[10px] font-label text-right opacity-60">LAST EDIT: 2 MINS AGO</p>
             </div>
         </div>
     </div>

@@ -23,7 +23,7 @@
             </p>
         </div>
         <a class="inline-flex items-center gap-2 bg-primary-container text-on-primary-container px-5 py-2.5 rounded-lg font-label text-xs uppercase tracking-widest font-bold shadow-[0_4px_0_0_#2e3aa2] active:translate-y-1 active:shadow-none transition-all duration-75"
-           href="{{ route('programs.plos.create', $program->id) }}">
+           href="{{ route('department.programs.plos.create', $program->id) }}">
             <span class="material-symbols-outlined text-lg">add_circle</span>
             Thêm PLO
         </a>
@@ -65,7 +65,7 @@
                                 <div class="flex items-center justify-end gap-3">
                                     <!-- Quản lý PI -->
                                     <a class="p-2 rounded-lg bg-surface-container hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center group/btn"
-                                       href="{{ route('programs.plos.pis.index', [$program->id, $plo->id]) }}"
+                                       href="{{ route('department.programs.plos.pis.index', [$program->id, $plo->id]) }}"
                                        title="Quản lý PI">
                                         <span class="material-symbols-outlined text-sm">account_tree</span>
                                         <span class="max-w-0 overflow-hidden group-hover/btn:max-w-xs group-hover/btn:ml-2 transition-all duration-300 font-label text-[10px] uppercase tracking-tighter">Quản lý PI</span>
@@ -73,14 +73,14 @@
 
                                     <!-- Sửa -->
                                     <a class="p-2 rounded-lg bg-surface-container hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center group/btn"
-                                       href="{{ route('programs.plos.edit', [$program->id, $plo->id]) }}"
+                                       href="{{ route('department.programs.plos.edit', [$program->id, $plo->id]) }}"
                                        title="Sửa">
                                         <span class="material-symbols-outlined text-sm">edit_note</span>
                                         <span class="max-w-0 overflow-hidden group-hover/btn:max-w-xs group-hover/btn:ml-2 transition-all duration-300 font-label text-[10px] uppercase tracking-tighter">Sửa</span>
                                     </a>
 
                                     <!-- Xóa -->
-                                    <form action="{{ route('programs.plos.destroy', [$program->id, $plo->id]) }}"
+                                    <form action="{{ route('department.programs.plos.destroy', [$program->id, $plo->id]) }}"
                                           method="POST"
                                           class="inline">
                                         @csrf

@@ -27,28 +27,6 @@ Route::prefix('admin')
             '/approval-requests/{id}/reject',
             [ApprovalRequestController::class, 'reject']
         )->name('approval.reject');
-
-        Route::prefix('admin')
-            ->middleware(['auth'])
-            ->group(function () {
-                Route::resource('courses', CourseController::class);
-            });
-
-        Route::get(
-            '/courses/{courseId}/assign-lecturer',
-            [InstructorCourseController::class, 'create']
-        )->name('courses.assignLecturer');
-
-        Route::post(
-            '/courses/{courseId}/assign-lecturer',
-            [InstructorCourseController::class, 'store']
-        )->name('courses.storeLecturer');
-
-        Route::delete(
-            '/instructor-courses/{id}',
-            [InstructorCourseController::class, 'destroy']
-        )->name('instructorCourses.destroy');
-
         Route::prefix('admin')
             ->middleware(['auth'])
             ->group(function () {
@@ -128,6 +106,4 @@ Route::prefix('admin')
 
         Route::delete('/programs/{programId}/plos/{ploId}/pis/{piId}', [PerformanceIndicatorController::class, 'destroy'])
             ->name('programs.plos.pis.destroy');
-
-
     });

@@ -9,6 +9,7 @@ namespace App\Models\Base;
 use App\Models\Base\ApprovalRequest;
 use App\Models\Base\Department;
 use App\Models\Base\InstructorCourse;
+use App\Models\Base\Program;
 use App\Models\Base\Role;
 use App\Models\Base\SyllabusApproval;
 use App\Models\Base\SyllabusAssignment;
@@ -41,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusApproval[] $syllabus_approvals
  * @property Collection|SyllabusContent[] $syllabus_contents
  * @property Collection|SyllabusHistory[] $syllabus_histories
+ * @property Collection|Program[] $programs
  * @property Collection|Role[] $roles
  * @property Collection|ApprovalRequest[] $approval_requests
  * @property Collection|Department[] $departments
@@ -80,6 +82,11 @@ class User extends Model
 	public function syllabus_histories()
 	{
 		return $this->hasMany(SyllabusHistory::class, 'changed_by');
+	}
+
+	public function programs()
+	{
+		return $this->hasMany(Program::class, 'director_user_id');
 	}
 
 	public function roles()

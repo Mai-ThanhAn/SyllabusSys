@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
 use App\Models\PerformanceIndicator;
@@ -21,7 +21,7 @@ class PerformanceIndicatorController extends Controller
             ->orderBy('code')
             ->get();
 
-        return view('admin.pis.index', compact('program', 'plo', 'pis'));
+        return view('department.programs.pis.index', compact('program', 'plo', 'pis'));
     }
 
     public function create(int $programId, int $ploId)
@@ -31,7 +31,7 @@ class PerformanceIndicatorController extends Controller
         $plo = ProgramLearningOutcome::where('program_id', $programId)
             ->findOrFail($ploId);
 
-        return view('admin.pis.create', compact('program', 'plo'));
+        return view('department.programs.pis.create', compact('program', 'plo'));
     }
 
     public function store(Request $request, int $programId, int $ploId)
@@ -51,7 +51,7 @@ class PerformanceIndicatorController extends Controller
         ]);
 
         return redirect()
-            ->route('programs.plos.pis.index', [$programId, $ploId])
+            ->route('department.programs.plos.pis.index', [$programId, $ploId])
             ->with('success', 'Thêm PI thành công.');
     }
 
@@ -65,7 +65,7 @@ class PerformanceIndicatorController extends Controller
         $pi = PerformanceIndicator::where('plo_id', $ploId)
             ->findOrFail($piId);
 
-        return view('admin.pis.edit', compact('program', 'plo', 'pi'));
+        return view('department.programs.pis.edit', compact('program', 'plo', 'pi'));
     }
 
     public function update(Request $request, int $programId, int $ploId, int $piId)
@@ -84,7 +84,7 @@ class PerformanceIndicatorController extends Controller
         ]);
 
         return redirect()
-            ->route('programs.plos.pis.index', [$programId, $ploId])
+            ->route('department.programs.plos.pis.index', [$programId, $ploId])
             ->with('success', 'Cập nhật PI thành công.');
     }
 
@@ -96,7 +96,7 @@ class PerformanceIndicatorController extends Controller
         $pi->delete();
 
         return redirect()
-            ->route('programs.plos.pis.index', [$programId, $ploId])
+            ->route('department.programs.plos.pis.index', [$programId, $ploId])
             ->with('success', 'Xóa PI thành công.');
     }
 }

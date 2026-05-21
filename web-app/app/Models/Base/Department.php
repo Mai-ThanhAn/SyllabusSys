@@ -8,6 +8,7 @@ namespace App\Models\Base;
 
 use App\Models\Base\ApprovalRequest;
 use App\Models\Base\Program;
+use App\Models\Base\SyllabusTemplate;
 use App\Models\Base\University;
 use App\Models\Base\User;
 use Carbon\Carbon;
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property University $university
  * @property User|null $user
  * @property Collection|Program[] $programs
+ * @property Collection|SyllabusTemplate[] $syllabus_templates
  * @property Collection|ApprovalRequest[] $approval_requests
  *
  * @package App\Models\Base\Base
@@ -53,6 +55,11 @@ class Department extends Model
 	public function programs()
 	{
 		return $this->hasMany(Program::class);
+	}
+
+	public function syllabus_templates()
+	{
+		return $this->hasMany(SyllabusTemplate::class);
 	}
 
 	public function approval_requests()

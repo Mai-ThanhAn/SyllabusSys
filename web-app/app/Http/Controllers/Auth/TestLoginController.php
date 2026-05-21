@@ -39,8 +39,8 @@ class TestLoginController extends Controller
 
         return match ($role) {
             'Lecturer' => redirect()->route('lecturer.dashboard'),
-            'Program_Director' => redirect()->route('program_director.syllabus_shells.create'),
-            'Department_Admin' => redirect()->route('department.syllabus-templates.index'),
+            'Program_Director' => redirect()->route('program_director.dashboard'),
+            'Department_Admin' => redirect()->route('department.dashboard'),
             'University_Admin' => redirect()->route('university-admin.dashboard'),
             'Superadmin' => redirect('/admin/courses'),
             default => redirect('/')->with('error', 'Tài khoản chưa có quyền phù hợp.'),

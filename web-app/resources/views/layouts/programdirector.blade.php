@@ -108,7 +108,7 @@
         </div>
 
         <nav class="flex-1 flex flex-col gap-2">
-            <a class="flex items-center gap-3 {{ request()->routeIs('program_director.syllabus_shells.*') ? 'bg-primary-container/10 text-primary border-l-2 border-primary' : 'text-on-surface-variant' }} px-4 py-3 font-label text-label-md uppercase tracking-wider hover:bg-surface-container-low transition-colors group" href="{{ route('program_director.syllabus_shells.create') }}">
+            <a class="flex items-center gap-3 {{ request()->routeIs('program-director.syllabus-shells.*') ? 'bg-primary-container/10 text-primary border-l-2 border-primary' : 'text-on-surface-variant' }} px-4 py-3 font-label text-label-md uppercase tracking-wider hover:bg-surface-container-low transition-colors group" href="{{ route('program_director.syllabus_shells.create') }}">
                 <span class="material-symbols-outlined text-xl">science</span>
                 <span>Laboratory</span>
             </a>

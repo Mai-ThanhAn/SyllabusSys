@@ -1,20 +1,64 @@
-<h1>Sửa viện/khoa</h1>
+<h1>Sửa viện / khoa</h1>
 
-<form method="POST" action="{{ route('university-admin.departments.update', $department->id) }}">
+@if($errors->any())
+    <ul style="color:red">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
+
+<form method="POST"
+      action="{{ route(
+        'university-admin.departments.update',
+        $department->id
+      ) }}">
+
     @csrf
     @method('PUT')
 
     <p>
-        <label>Mã viện/khoa:</label><br>
-        <input type="text" name="department_code" value="{{ old('department_code', $department->department_code) }}">
+        <label>Tên viện/khoa:</label><br>
+
+        <input type="text"
+               name="department_name"
+               value="{{ old(
+                    'department_name',
+                    $department->department_name
+               ) }}">
     </p>
 
     <p>
-        <label>Tên viện/khoa:</label><br>
-        <input type="text" name="department_name" value="{{ old('department_name', $department->department_name) }}">
+        <label>Trường:</label><br>
+
+        <select name="university_id">
+
+            @foreach($universities as $university)
+
+                <option value="{{ $university->id }}"
+                    @selected(
+                        old(
+                            'university_id',
+                            $department->university_id
+                        ) == $university->id
+                    )>
+
+                    {{ $university->university_name ?? ('University #' . $university->id) }}
+
+                </option>
+
+            @endforeach
+
+        </select>
     </p>
 
-    <button type="submit">Cập nhật</button>
+    <button type="submit">
+        Cập nhật
+    </button>
 </form>
 
-<a href="{{ route('university-admin.departments.index') }}">Quay lại</a>
+<p>
+    <a href="{{ route('university-admin.departments.index') }}">
+        Quay lại
+    </a>
+</p>

@@ -2,37 +2,66 @@
 
 namespace App\Http\Controllers\UniversityAdmin;
 
-use App\Enums\RoleName;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Role;
+use App\Models\University;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Danh sách viện/khoa
+    |--------------------------------------------------------------------------
+    */
     public function index()
     {
-        $departments = Department::with('head')->orderBy('id')->get();
+        $departments = Department::with([
+            'university',
+            'head',
+        ])
+            ->orderBy('id')
+            ->get();
 
-        return view('university_admin.departments.index', compact('departments'));
+        return view(
+            'university_admin.departments.index',
+            compact('departments')
+        );
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Form tạo viện/khoa
+    |--------------------------------------------------------------------------
+    */
     public function create()
     {
-        return view('university_admin.departments.create');
+        $universities = University::orderBy('id')->get();
+
+        return view(
+            'university_admin.departments.create',
+            compact('universities')
+        );
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Lưu viện/khoa
+    |--------------------------------------------------------------------------
+    */
     public function store(Request $request)
     {
         $request->validate([
             'department_name' => 'required|string|max:255',
-            'department_code' => 'nullable|string|max:50',
+            'university_id' => 'required|exists:universities,id',
         ]);
 
         Department::create([
             'department_name' => $request->department_name,
-            'department_code' => $request->department_code,
+            'university_id' => $request->university_id,
+            'created_at' => now(),
         ]);
 
         return redirect()
@@ -40,25 +69,40 @@ class DepartmentController extends Controller
             ->with('success', 'Đã tạo viện/khoa.');
     }
 
-    public function edit(int $id)
+    /*
+    |--------------------------------------------------------------------------
+    | Form sửa viện/khoa
+    |--------------------------------------------------------------------------
+    */
+    public function edit($id)
     {
         $department = Department::findOrFail($id);
 
-        return view('university_admin.departments.edit', compact('department'));
+        $universities = University::orderBy('id')->get();
+
+        return view(
+            'university_admin.departments.edit',
+            compact('department', 'universities')
+        );
     }
 
-    public function update(Request $request, int $id)
+    /*
+    |--------------------------------------------------------------------------
+    | Cập nhật viện/khoa
+    |--------------------------------------------------------------------------
+    */
+    public function update(Request $request, $id)
     {
         $department = Department::findOrFail($id);
 
         $request->validate([
             'department_name' => 'required|string|max:255',
-            'department_code' => 'nullable|string|max:50',
+            'university_id' => 'required|exists:universities,id',
         ]);
 
         $department->update([
             'department_name' => $request->department_name,
-            'department_code' => $request->department_code,
+            'university_id' => $request->university_id,
         ]);
 
         return redirect()
@@ -66,27 +110,77 @@ class DepartmentController extends Controller
             ->with('success', 'Đã cập nhật viện/khoa.');
     }
 
-    public function destroy(int $id)
+    /*
+    |--------------------------------------------------------------------------
+    | Xóa viện/khoa
+    |--------------------------------------------------------------------------
+    */
+    public function destroy($id)
     {
         Department::findOrFail($id)->delete();
 
-        return back()->with('success', 'Đã xóa viện/khoa.');
+        return redirect()
+            ->route('university-admin.departments.index')
+            ->with('success', 'Đã xóa viện/khoa.');
     }
 
-    public function assignHead(Request $request, int $departmentId)
+    /*
+    |--------------------------------------------------------------------------
+    | Màn hình bổ nhiệm trưởng khoa
+    |--------------------------------------------------------------------------
+    */
+    public function show($id)
+    {
+        $department = Department::with([
+            'university',
+            'head',
+        ])->findOrFail($id);
+
+        $users = User::with('roles')
+            ->where('is_active', true)
+            ->where('is_approved', true)
+            ->orderBy('full_name')
+            ->get();
+
+        return view(
+            'university_admin.departments.show',
+            compact('department', 'users')
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bổ nhiệm trưởng khoa
+    |--------------------------------------------------------------------------
+    */
+    public function assignHead(Request $request, $departmentId)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
 
         $department = Department::findOrFail($departmentId);
+
         $user = User::findOrFail($request->user_id);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Update department head
+        |--------------------------------------------------------------------------
+        */
         $department->update([
             'head_user_id' => $user->id,
         ]);
 
-        $role = Role::where('role_name', 'Department_Admin')->first();
+        /*
+        |--------------------------------------------------------------------------
+        | Gán role Department_Admin
+        |--------------------------------------------------------------------------
+        */
+        $role = Role::where(
+            'role_name',
+            'Department_Admin'
+        )->first();
 
         if ($role) {
             $user->roles()->syncWithoutDetaching([
@@ -97,22 +191,23 @@ class DepartmentController extends Controller
             ]);
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Gán user thuộc department
+        |--------------------------------------------------------------------------
+        */
         $user->update([
             'department_id' => $department->id,
         ]);
 
-        return back()->with('success', 'Đã bổ nhiệm viện trưởng/khoa trưởng.');
-    }
-
-    public function show(int $id)
-    {
-        $department = Department::with('head')->findOrFail($id);
-
-        $users = User::where('is_active', true)
-            ->where('is_approved', true)
-            ->orderBy('full_name')
-            ->get();
-
-        return view('university_admin.departments.show', compact('department', 'users'));
+        return redirect()
+            ->route(
+                'university-admin.departments.show',
+                $department->id
+            )
+            ->with(
+                'success',
+                'Đã bổ nhiệm trưởng khoa.'
+            );
     }
 }

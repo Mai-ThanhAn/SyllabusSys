@@ -40,7 +40,7 @@ class SyllabusApprovalController extends Controller
         return view('program_director.syllabus_approvals.show', compact('approval'));
     }
 
-    public function approve( $id)
+    public function approve($id)
     {
         $approval = SyllabusApproval::with('version.syllabus')
             ->findOrFail($id);
@@ -63,15 +63,16 @@ class SyllabusApprovalController extends Controller
             ]);
         });
 
+        // SỬA: Đúng route name theo file route của bạn
         return redirect()
-            ->route('department.syllabus-approvals.index')
-            ->with('success', 'Đã duyệt đề cương.');
+            ->route('program_director.syllabus_approvals.index')
+            ->with('success', 'Đã duyệt đề cương thành công!');
     }
 
     public function reject(Request $request, $id)
     {
         $request->validate([
-            'comment' => 'required|string',
+            'comment' => 'required|string|min:5',
         ]);
 
         $approval = SyllabusApproval::with('version.syllabus')
@@ -96,8 +97,9 @@ class SyllabusApprovalController extends Controller
             ]);
         });
 
+        // SỬA: Đúng route name theo file route của bạn
         return redirect()
-            ->route('program-director.syllabus-approvals.index')
-            ->with('success', 'Đã duyệt đề cương.');
+            ->route('program_director.syllabus_approvals.index')
+            ->with('success', 'Đã từ chối đề cương.');
     }
 }

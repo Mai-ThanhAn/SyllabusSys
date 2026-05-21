@@ -22,6 +22,23 @@ use Illuminate\Support\Facades\DB;
 
 class SyllabusShellController extends Controller
 {
+    public function index()
+{
+    $syllabuses = Syllabus::with([
+        'course.program',
+        'template',
+        'status',
+        'assignments.user',
+    ])
+    ->where('created_by', Auth::id())
+    ->latest('id')
+    ->get();
+
+    return view(
+        'program_director.syllabus_shells.index',
+        compact('syllabuses')
+    );
+}
     public function create()
     {
         $user = Auth::user();
@@ -31,6 +48,10 @@ class SyllabusShellController extends Controller
             ->get();
 
         $templates = SyllabusTemplate::where('is_active', true)
+            ->where(
+                'department_id',
+                Auth::user()->department_id
+            )
             ->orderBy('template_name')
             ->get();
 
@@ -138,7 +159,7 @@ class SyllabusShellController extends Controller
         });
 
         return redirect()
-            ->route('program-director.syllabus-shells.create')
+            ->route('program_director.syllabus_shells.create')
             ->with(
                 'success',
                 'Tạo syllabus shell và phân công giảng viên thành công.'

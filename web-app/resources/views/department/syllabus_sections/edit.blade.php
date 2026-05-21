@@ -3,6 +3,58 @@
 @section('title', 'Sửa section | TechSyllabus')
 
 @section('content')
+   <style>
+        /* Force dark theme for this page */
+        .technical-grid {
+            background: #0a0a0c;
+            background-image:
+                linear-gradient(rgba(94, 106, 210, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(94, 106, 210, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .surface-container {
+            background: rgba(28, 27, 29, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .surface-container-low {
+            background: rgba(28, 27, 29, 0.6);
+        }
+
+        .surface-container-lowest {
+            background: rgba(32, 31, 33, 0.95);
+        }
+
+        .surface-container-high {
+            background: rgba(40, 39, 42, 0.9);
+        }
+
+        .text-on-surface {
+            color: #e6e6e6;
+        }
+
+        .text-on-surface-variant {
+            color: #a1a1aa;
+        }
+
+        .text-outline {
+            color: #71717a;
+        }
+
+        .border-outline-variant\/10 {
+            border-color: rgba(113, 113, 122, 0.1);
+        }
+
+        .border-outline-variant\/20 {
+            border-color: rgba(113, 113, 122, 0.2);
+        }
+
+        body,
+        main {
+            background: #0a0a0c;
+        }
+    </style>
 <main class="ml-64 pt-24 pb-12 px-8 min-h-screen z-10 relative">
     <div class="max-w-6xl mx-auto">
         <!-- Context Banner -->
