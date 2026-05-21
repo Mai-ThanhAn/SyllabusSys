@@ -130,7 +130,7 @@
                 <a class="text-[#9a9a9a] hover:text-[#e5e1e3] transition-colors" href="#">Về Chúng Tôi</a>
             </div>
             <div class="flex items-center gap-4">
-                <a href="{{ route('auth.google') }}"
+                <a href="{{ route('login') }}"
                     class="bg-primary-container text-on-primary-container
           px-4 py-2 rounded-lg text-sm font-semibold
           shadow-extruded hover:scale-95 active:scale-90

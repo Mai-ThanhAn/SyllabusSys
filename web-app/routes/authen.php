@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Auth\AccountController;
+use App\Http\Controllers\Auth\TestLoginController;
+
 
 Route::controller(AccountController::class)
     ->prefix('auth')
@@ -32,3 +34,7 @@ Route::controller(AccountController::class)
         Route::post('/register-lecturer', 'storeLecturer')
             ->name('storeLecturer');
     });
+
+Route::get('/login', [TestLoginController::class, 'showLogin'])->name('login');
+Route::post('/login', [TestLoginController::class, 'login'])->name('login.post');
+Route::post('/logout', [TestLoginController::class, 'logout'])->name('logout');
