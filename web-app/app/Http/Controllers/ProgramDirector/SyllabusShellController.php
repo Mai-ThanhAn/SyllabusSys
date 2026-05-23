@@ -22,23 +22,48 @@ use Illuminate\Support\Facades\DB;
 
 class SyllabusShellController extends Controller
 {
+    private function currentUser()
+    {
+        return Auth::user();
+    }
+    private function getCourseInMyProgram($courseId)
+    {
+        return Course::where('program_id', $this->currentUser()->program_id)
+            ->findOrFail($courseId);
+    }
+    private function getTemplateInMyDepartment($templateId)
+    {
+        return SyllabusTemplate::where('department_id', $this->currentUser()->department_id)
+            ->where('is_active', true)
+            ->findOrFail($templateId);
+    }
+    private function getLecturerInMyDepartment($userId)
+    {
+        return User::where('department_id', $this->currentUser()->department_id)
+            ->where('is_active', true)
+            ->where('is_approved', true)
+            ->whereHas('roles', function ($q) {
+                $q->where('role_name', RoleName::LECTURER->value);
+            })
+            ->findOrFail($userId);
+    }
     public function index()
-{
-    $syllabuses = Syllabus::with([
-        'course.program',
-        'template',
-        'status',
-        'assignments.user',
-    ])
-    ->where('created_by', Auth::id())
-    ->latest('id')
-    ->get();
+    {
+        $syllabuses = Syllabus::with([
+            'course.program',
+            'template',
+            'status',
+            'assignments.user',
+        ])
+            ->where('created_by', Auth::id())
+            ->latest('id')
+            ->get();
 
-    return view(
-        'program_director.syllabus_shells.index',
-        compact('syllabuses')
-    );
-}
+        return view(
+            'program_director.syllabus_shells.index',
+            compact('syllabuses')
+        );
+    }
     public function create()
     {
         $user = Auth::user();
@@ -64,15 +89,18 @@ class SyllabusShellController extends Controller
             ->orderBy('full_name')
             ->get();
 
-        $plos = ProgramLearningOutcome::where('program_id', $user->program_id)
+        $plos = ProgramLearningOutcome::with(['performanceIndicators' => function ($q) {
+            $q->orderBy('code');
+        }])
+            ->where('program_id', $user->program_id)
             ->orderBy('code')
             ->get();
 
-        $pis = PerformanceIndicator::whereHas('programLearningOutcome', function ($q) use ($user) {
-            $q->where('program_id', $user->program_id);
-        })
-            ->orderBy('code')
-            ->get();
+        // $pis = PerformanceIndicator::whereHas('programLearningOutcome', function ($q) use ($user) {
+        //     $q->where('program_id', $user->program_id);
+        // })
+        //     ->orderBy('code')
+        //     ->get();
 
         return view(
             'program_director.syllabus_shells.create',
@@ -80,10 +108,23 @@ class SyllabusShellController extends Controller
                 'courses',
                 'templates',
                 'lecturers',
-                'plos',
-                'pis'
+                'plos'
             )
         );
+    }
+
+    private function renderGeneralInfoHtml(array $data): string
+    {
+        return view('partials.syllabus.general_info', [
+            'data' => $data,
+        ])->render();
+    }
+
+    private function renderCourseDescriptionHtml(?string $description): string
+    {
+        return view('partials.syllabus.course_description', [
+            'description' => $description,
+        ])->render();
     }
 
     public function store(Request $request)
@@ -94,66 +135,126 @@ class SyllabusShellController extends Controller
             'assigned_to' => 'required|exists:users,id',
             'academic_year' => 'required|string|max:20',
 
-            'plo_ids' => 'required|array|min:1',
-            'plo_ids.*' => 'exists:program_learning_outcomes,id',
-
-            'pi_ids' => 'nullable|array',
+            'pi_ids' => 'required|array|min:1',
             'pi_ids.*' => 'exists:performance_indicators,id',
 
             'planning_note' => 'nullable|string',
             'due_date' => 'nullable|date',
+
+            'general_info' => 'nullable|array',
+            'general_info.course_name' => 'nullable|string|max:255',
+            'general_info.english_name' => 'nullable|string|max:255',
+            'general_info.course_code' => 'nullable|string|max:50',
+            'general_info.e_learning' => 'nullable|string|max:255',
+            'general_info.credits' => 'nullable|integer|min:0',
+            'general_info.theory_hours' => 'nullable|integer|min:0',
+            'general_info.practice_hours' => 'nullable|integer|min:0',
+            'general_info.self_study_hours' => 'nullable|integer|min:0',
+            'general_info.prerequisite' => 'nullable|string',
+            'general_info.previous_course' => 'nullable|string',
+            'general_info.parallel_course' => 'nullable|string',
+
+            'course_description' => 'nullable|string',
         ]);
 
-        DB::transaction(function () use ($request) {
+        $user = Auth::user();
+
+        $course = $this->getCourseInMyProgram($request->course_id);
+        $template = $this->getTemplateInMyDepartment($request->template_id);
+        $lecturer = $this->getLecturerInMyDepartment($request->assigned_to);
+
+        $selectedPis = PerformanceIndicator::whereHas('programLearningOutcome', function ($q) use ($user) {
+            $q->where('program_id', $user->program_id);
+        })
+            ->whereIn('id', $request->pi_ids)
+            ->get();
+
+        if ($selectedPis->count() !== count($request->pi_ids)) {
+            abort(403, 'PI không thuộc CTĐT của bạn.');
+        }
+
+        $ploIds = $selectedPis
+            ->pluck('plo_id')
+            ->unique()
+            ->values();
+
+        DB::transaction(function () use ($request, $course, $template, $lecturer,  $selectedPis, $ploIds) {
 
             $assignedStatus = Status::where('status_name', 'Assigned')
                 ->firstOrFail();
 
             $syllabus = Syllabus::create([
-                'course_id' => $request->course_id,
-                'template_id' => $request->template_id,
+                'course_id' => $course->id,
+                'template_id' => $template->id,
                 'academic_year' => $request->academic_year,
                 'created_by' => Auth::id(),
                 'status_id' => $assignedStatus->id,
                 'planning_note' => $request->planning_note,
                 'due_date' => $request->due_date,
+                'assigned_at' => now(),
             ]);
 
             SyllabusAssignment::create([
                 'syllabus_id' => $syllabus->id,
-                'user_id' => $request->assigned_to,
+                'user_id' => $lecturer->id,
                 'assignment_role' => 'PRIMARY_AUTHOR',
                 'assigned_by' => Auth::id(),
                 'assigned_at' => now(),
             ]);
 
-            $sections = SyllabusSection::where('template_id', $request->template_id)
+            $sections = SyllabusSection::where('template_id', $template->id)
                 ->orderBy('display_order')
                 ->get();
 
+            $generalInfo = $request->input('general_info', []);
+            $courseDescription = $request->input('course_description', '');
+
             foreach ($sections as $section) {
+
+                $contentHtml = '';
+                $contentRaw = null;
+
+                if ($section->section_code === 'COURSE_INFO') {
+                    $contentHtml = $this->renderGeneralInfoHtml($generalInfo);
+                    $contentRaw = [
+                        'type' => 'general_info',
+                        'data' => $generalInfo,
+                        'prefilled_by' => Auth::id(),
+                        'prefilled_at' => now()->toDateTimeString(),
+                    ];
+                }
+
+                if ($section->section_code === 'COURSE_DESCRIPTION') {
+                    $contentHtml = $this->renderCourseDescriptionHtml($courseDescription);
+                    $contentRaw = [
+                        'type' => 'course_description',
+                        'data' => [
+                            'description' => $courseDescription,
+                        ],
+                        'prefilled_by' => Auth::id(),
+                        'prefilled_at' => now()->toDateTimeString(),
+                    ];
+                }
 
                 SyllabusContent::create([
                     'syllabus_id' => $syllabus->id,
                     'section_id' => $section->id,
-                    'content_html' => '',
-                    'content_raw' => null,
+                    'content_html' => $contentHtml,
+                    'content_raw' => $contentRaw,
                 ]);
             }
 
-            foreach ($request->plo_ids as $ploId) {
-
+            foreach ($ploIds as $ploId) {
                 SyllabusPloTarget::create([
                     'syllabus_id' => $syllabus->id,
                     'plo_id' => $ploId,
                 ]);
             }
 
-            foreach ($request->pi_ids ?? [] as $piId) {
-
+            foreach ($selectedPis as $pi) {
                 SyllabusPiTarget::create([
                     'syllabus_id' => $syllabus->id,
-                    'pi_id' => $piId,
+                    'pi_id' => $pi->id,
                 ]);
             }
         });

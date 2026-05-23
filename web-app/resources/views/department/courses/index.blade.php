@@ -1,10 +1,9 @@
-@extends('layouts.department') {{-- Thay bằng layout thực tế của bạn --}}
+@extends('layouts.department')
 
 @section('title', 'Quản lý môn học | TechSyllabus')
 
 @section('content')
 <!-- Main Content Canvas -->
-<main class="ml-64 pt-24 px-8 pb-12 relative z-10 technical-grid min-h-screen">
     <div class="max-w-7xl mx-auto">
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
@@ -138,11 +137,6 @@
 
         <!-- Footer Navigation & Stats -->
         <div class="mt-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-outline-variant/10 pt-6">
-            <a href="{{ route('department.dashboard') }}"
-               class="group flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors text-sm font-label uppercase tracking-widest">
-                <span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
-                Quay lại dashboard
-            </a>
             <div class="flex gap-8">
                 <div class="flex flex-col">
                     <span class="font-label text-[9px] uppercase tracking-widest text-outline">Total Courses</span>
@@ -157,20 +151,8 @@
                     <span class="text-[10px] font-bold text-on-surface">{{ now()->format('d/m/Y H:i') }}</span>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
-                <button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Export Data">
-                    <span class="material-symbols-outlined text-sm">download</span>
-                </button>
-                <button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Print">
-                    <span class="material-symbols-outlined text-sm">print</span>
-                </button>
-                <button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Refresh">
-                    <span class="material-symbols-outlined text-sm">refresh</span>
-                </button>
-            </div>
         </div>
     </div>
-</main>
 
 <script>
     // Auto-close success alert after 5 seconds

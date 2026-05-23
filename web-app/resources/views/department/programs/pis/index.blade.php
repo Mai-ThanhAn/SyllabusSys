@@ -1,6 +1,6 @@
 @extends('layouts.department')
 
-@section('title', 'Danh sách PI | Syllabus Lab')
+@section('title', 'Danh sách PI | Syllabus_System')
 
 @section('content')
 <!-- Main Content Area -->
@@ -105,10 +105,10 @@
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <a href="{{ route('programs.plos.pis.edit', [$program->id, $plo->id, $pi->id]) }}" class="p-2 hover:bg-surface-variant rounded-lg text-primary transition-all" title="Chỉnh sửa">
+                                        <a href="{{ route('department.programs.plos.pis.edit', [$program->id, $plo->id, $pi->id]) }}" class="p-2 hover:bg-surface-variant rounded-lg text-primary transition-all" title="Chỉnh sửa">
                                             <span class="material-symbols-outlined text-lg">edit</span>
                                         </a>
-                                        <form method="POST" action="{{ route('programs.plos.pis.destroy', [$program->id, $plo->id, $pi->id]) }}" class="inline delete-form">
+                                        <form method="POST" action="{{ route('department.programs.plos.pis.destroy', [$program->id, $plo->id, $pi->id]) }}" class="inline delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="delete-btn p-2 hover:bg-error-container/20 rounded-lg text-error transition-all" title="Xóa">
@@ -136,39 +136,6 @@
                 </div>
                 <div class="p-4 bg-surface-container-lowest/30 border-t border-outline-variant/10 text-[11px] font-label uppercase tracking-widest text-outline text-center">
                     End of Lab Results Container
-                </div>
-            </div>
-
-            <!-- AI Insights / Technical Specs Panel -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 terminal-accent bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/5">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="material-symbols-outlined text-primary text-sm">terminal</span>
-                        <h4 class="font-label uppercase text-[10px] tracking-[0.2em] text-outline">Lab Metadata Insights</h4>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center text-sm border-b border-outline-variant/10 pb-2">
-                            <span class="text-on-surface-variant font-label">Mapping Integrity</span>
-                            <span class="text-primary font-bold">100% Validated</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm border-b border-outline-variant/10 pb-2">
-                            <span class="text-on-surface-variant font-label">PI Distribution</span>
-                            <span class="text-on-surface">{{ $pis->count() }} Active PI</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm border-b border-outline-variant/10 pb-2">
-                            <span class="text-on-surface-variant font-label">Bloom's Taxonomy Level</span>
-                            <span class="text-tertiary">Level 4: Analyzing</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-primary-container/5 p-6 rounded-xl border border-primary-container/10 flex flex-col items-center justify-center text-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary mb-2">
-                        <span class="material-symbols-outlined text-3xl">auto_awesome</span>
-                    </div>
-                    <p class="text-xs font-medium leading-relaxed">Sử dụng AI Lab để tự động đề xuất mô tả PI dựa trên tiêu chuẩn ABET.</p>
-                    <button class="w-full py-2.5 rounded-lg bg-surface-container font-label uppercase text-[11px] tracking-widest border border-outline-variant/20 hover:border-primary-container/50 transition-all active:scale-95">
-                        Khởi chạy AI Suggest
-                    </button>
                 </div>
             </div>
         </div>

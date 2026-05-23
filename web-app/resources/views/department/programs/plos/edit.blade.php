@@ -1,6 +1,6 @@
 @extends('layouts.department')
 
-@section('title', 'Sửa PLO | Syllabus Lab')
+@section('title', 'Sửa PLO | Syllabus_System')
 
 @section('content')
 <!-- Main Canvas -->

@@ -16,6 +16,7 @@ class SyllabusContent extends BaseSyllabusContent
     protected $casts = [
         'syllabus_id' => 'int',
         'section_id' => 'int',
+        'content_raw' => 'array',
     ];
 
     public function syllabus()

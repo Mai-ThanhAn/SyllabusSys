@@ -11,39 +11,65 @@ use Illuminate\Support\Facades\DB;
 
 class SyllabusApprovalController extends Controller
 {
+    private function getApprovalInMyProgram($id)
+    {
+        return SyllabusApproval::with([
+            'version.syllabus.course.program',
+            'version.contents.section',
+            'version.courseObjectives',
+            'version.courseLearningOutcomes',
+            'version.teachingPlanItems.cloMappings',
+        ])
+            ->whereHas('version.syllabus.course', function ($q) {
+                $q->where('program_id', Auth::user()->program_id);
+            })
+            ->findOrFail($id);
+    }
     public function index()
     {
-        $pendingStatus = Status::where('status_name', 'Pending')->firstOrFail();
+        $submittedStatus = Status::where('status_name', 'Submitted')->firstOrFail();
 
         $approvals = SyllabusApproval::with([
             'version.syllabus.course',
             'version.syllabus.course.program',
             'version.creator',
         ])
-            ->where('status_id', $pendingStatus->id)
-            ->latest()
-            ->get();
+            ->where('status_id', $submittedStatus->id)
+            ->whereHas('version.syllabus.course', function ($q) {
+                $q->where('program_id', Auth::user()->program_id);
+            })
+            ->orderByDesc('id')
+            ->paginate(10);
 
         return view('program_director.syllabus_approvals.index', compact('approvals'));
     }
 
     public function show($id)
     {
-        $approval = SyllabusApproval::with([
-            'version.syllabus.course.program',
-            'version.contents.section',
-            'version.courseObjectives',
-            'version.courseLearningOutcomes',
-            'version.teachingPlanItems.cloMappings',
-        ])->findOrFail($id);
+        $approval = $this->getApprovalInMyProgram($id);
 
-        return view('program_director.syllabus_approvals.show', compact('approval'));
+        $diffResult = null;
+
+        $currentVersion = $approval->version;
+
+        if ($currentVersion->base_version_id) {
+            $baseVersion = \App\Models\SyllabusVersion::find($currentVersion->base_version_id);
+
+            if ($baseVersion) {
+                $diffResult = app(\App\Services\Syllabus\SyllabusDiffService::class)
+                    ->buildDiff($baseVersion, $currentVersion);
+            }
+        }
+
+        return view(
+            'program_director.syllabus_approvals.show',
+            compact('approval', 'diffResult')
+        );
     }
 
     public function approve($id)
     {
-        $approval = SyllabusApproval::with('version.syllabus')
-            ->findOrFail($id);
+        $approval = $this->getApprovalInMyProgram($id);
 
         DB::transaction(function () use ($approval) {
             $approvedStatus = Status::where('status_name', 'Approved')->firstOrFail();

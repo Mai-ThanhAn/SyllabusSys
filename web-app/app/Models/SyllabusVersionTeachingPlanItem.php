@@ -6,13 +6,20 @@ use App\Models\Base\SyllabusVersionTeachingPlanItem as BaseSyllabusVersionTeachi
 
 class SyllabusVersionTeachingPlanItem extends BaseSyllabusVersionTeachingPlanItem
 {
-	protected $fillable = [
-		'version_id',
-		'item_order',
-		'title',
-		'content',
-		'teaching_activities',
-		'learning_activities',
-		'assessment_activities'
-	];
+    protected $fillable = [
+        'version_id',
+        'item_order',
+        'title',
+        'content',
+        'teaching_activities',
+        'learning_activities',
+        'assessment_activities'
+    ];
+    public function cloMappings()
+    {
+        return $this->hasMany(
+            SyllabusVersionTeachingPlanCloMapping::class,
+            'version_teaching_plan_item_id'
+        );
+    }
 }

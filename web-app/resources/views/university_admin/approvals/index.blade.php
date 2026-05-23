@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Danh sách tài khoản chờ duyệt | Syllabus Lab')
+@section('title', 'Danh sách tài khoản chờ duyệt | Syllabus_System')
 
 @section('content')
 <!-- Header Section -->
@@ -10,7 +10,7 @@
             Danh sách tài khoản chờ duyệt
         </h2>
         <p class="text-on-surface-variant/70 mt-2 font-body max-w-lg">
-            Xử lý các yêu cầu đăng ký tài khoản mới cho hệ thống Syllabus Lab. Vui lòng kiểm tra kỹ vai trò và thông tin học thuật.
+            Xử lý các yêu cầu đăng ký tài khoản mới cho hệ thống Syllabus_System. Vui lòng kiểm tra kỹ vai trò và thông tin học thuật.
         </p>
     </div>
     <div class="flex items-center gap-3">

@@ -42,8 +42,11 @@ class SyllabusAuthoringController extends Controller
             'contents.section',
             'ploTargets.programLearningOutcome',
             'piTargets.performanceIndicator',
+            'courseObjectives',
+            'courseLearningOutcomes',
             'teachingPlanItems.cloMappings.clo',
         ])->findOrFail($syllabusId);
+
         $this->ensureEditable($syllabus);
         $contents = $syllabus->contents
             ->sortBy(fn($content) => $content->section->display_order ?? 999);
@@ -93,13 +96,11 @@ class SyllabusAuthoringController extends Controller
             'teachingPlanItems.cloMappings.clo',
         ])->findOrFail($syllabusId);
 
+        $this->ensureEditable($syllabus);
+
         DB::transaction(function () use ($syllabus) {
 
-            $submittedStatus = Status::where('status_name', 'Submitted')
-                ->firstOrFail();
-
-            $pendingStatus = Status::where('status_name', 'Pending')
-                ->firstOrFail();
+            $submittedStatus = Status::where('status_name', 'Submitted')->firstOrFail();
 
             $latestVersionNumber = SyllabusVersion::where('syllabus_id', $syllabus->id)
                 ->max('version_number');
@@ -125,13 +126,17 @@ class SyllabusAuthoringController extends Controller
                     ->first();
             }
 
+            $baseVersion = SyllabusVersion::where('syllabus_id', $syllabus->id)
+                ->latest('id')
+                ->first();
+
             $version = SyllabusVersion::create([
                 'syllabus_id' => $syllabus->id,
                 'version_number' => $versionNumber,
                 'created_by' => Auth::id(),
                 'status_id' => $submittedStatus->id,
                 'submission_type' => $versionNumber === 1 ? 'submitted' : 'resubmitted',
-                'base_version_id' => $lastRejectedVersion?->id,
+                'base_version_id' => $baseVersion?->id,
                 'note' => 'Giảng viên gửi đề cương duyệt.',
             ]);
 
@@ -181,45 +186,39 @@ class SyllabusAuthoringController extends Controller
                 }
             }
 
-            if ($lastRejectedVersion) {
-
+            if ($baseVersion) {
                 $newVersion = SyllabusVersion::with([
                     'contents.section',
                     'courseObjectives',
                     'courseLearningOutcomes',
-                    'teachingPlanItems',
+                    'teachingPlanItems.cloMappings',
                 ])->find($version->id);
 
                 $oldVersion = SyllabusVersion::with([
                     'contents.section',
                     'courseObjectives',
                     'courseLearningOutcomes',
-                    'teachingPlanItems',
-                ])->find($lastRejectedVersion->id);
+                    'teachingPlanItems.cloMappings',
+                ])->find($baseVersion->id);
 
                 $diffPayload = [
                     'course_name' => $syllabus->course->course_name,
                     'from_version' => $oldVersion->version_number,
                     'to_version' => $newVersion->version_number,
-                    'changes' => $this->diffService->buildDiff(
-                        $oldVersion,
-                        $newVersion
-                    ),
+                    'changes' => $this->diffService->buildDiff($oldVersion, $newVersion),
                 ];
 
-                $summary = $this->aiClient->generateSmartDiff(
-                    $diffPayload
-                );
+                $summary = $this->aiClient->generateSmartDiff($diffPayload);
 
                 $version->update([
-                    'ai_change_summary' => $summary
+                    'ai_change_summary' => $summary,
                 ]);
             }
 
             SyllabusApproval::create([
                 'version_id' => $version->id,
-                'approved_by' => Auth::id(),
-                'status_id' => $pendingStatus->id,
+                'approved_by' => null,
+                'status_id' => $submittedStatus->id,
                 'comment' => null,
                 'approved_at' => null,
             ]);

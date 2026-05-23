@@ -21,4 +21,8 @@ class SyllabusTemplate extends BaseSyllabusTemplate
     {
         return $this->belongsTo(Program::class);
     }
+    public function sections()
+    {
+        return $this->hasMany(\App\Models\SyllabusSection::class, 'template_id');
+    }
 }

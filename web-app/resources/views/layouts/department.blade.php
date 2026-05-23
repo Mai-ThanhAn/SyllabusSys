@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('title', 'TechSyllabus | Academic Lab Admin')</title>
+    <title>@yield('title', 'Syllabus_System | Instructor Dashboard')</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 
     <script id="tailwind-config">
@@ -14,69 +14,68 @@
             darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
+                    colors: {
+                        "secondary-container": "#42466e",
+                        "outline": "#908f9e",
+                        "secondary-fixed-dim": "#c0c3f2",
+                        "surface": "#131315",
+                        "surface-container-lowest": "#0e0e0f",
+                        "surface-variant": "#353436",
+                        "on-tertiary-container": "#fffaf8",
+                        "primary": "#bdc2ff",
+                        "outline-variant": "#454652",
+                        "surface-tint": "#bdc2ff",
+                        "tertiary-fixed": "#ffddbb",
+                        "on-primary-fixed-variant": "#2e3aa2",
+                        "primary-fixed-dim": "#bdc2ff",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "surface-container-low": "#1c1b1d",
+                        "secondary": "#c0c3f2",
+                        "inverse-surface": "#e5e1e3",
+                        "inverse-on-surface": "#313032",
+                        "tertiary-fixed-dim": "#ffb867",
+                        "on-background": "#e5e1e3",
+                        "on-surface": "#e5e1e3",
+                        "error-container": "#93000a",
+                        "on-secondary": "#292d53",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2a2a2b",
+                        "on-secondary-fixed": "#13183d",
+                        "on-primary": "#121f8b",
+                        "surface-dim": "#131315",
+                        "on-primary-container": "#fdfaff",
+                        "surface-container-highest": "#353436",
+                        "on-tertiary": "#482900",
+                        "on-error": "#690005",
+                        "on-surface-variant": "#c6c5d5",
+                        "error": "#ffb4ab",
                         "surface-container": "#201f21",
                         "on-primary-fixed": "#000965",
-                        "on-error-container": "#ffdad6",
-                        "background": "#131315",
-                        "surface-container-highest": "#353436",
-                        "secondary": "#c0c3f2",
-                        "on-tertiary-fixed": "#2b1700",
-                        "on-error": "#690005",
-                        "surface-bright": "#3a393a",
-                        "on-primary-fixed-variant": "#2e3aa2",
-                        "on-background": "#e5e1e3",
-                        "on-secondary-fixed": "#13183d",
-                        "inverse-surface": "#e5e1e3",
-                        "on-surface-variant": "#c6c5d5",
-                        "primary": "#bdc2ff",
-                        "on-surface": "#e5e1e3",
-                        "inverse-primary": "#4854bb",
-                        "error-container": "#93000a",
-                        "tertiary-container": "#a56500",
-                        "surface": "#131315",
-                        "secondary-fixed-dim": "#c0c3f2",
                         "primary-container": "#5e6ad2",
-                        "primary-fixed": "#dfe0ff",
-                        "on-secondary": "#292d53",
-                        "surface-container-high": "#2a2a2b",
-                        "on-tertiary-fixed-variant": "#673d00",
-                        "error": "#ffb4ab",
-                        "surface-variant": "#353436",
-                        "tertiary-fixed": "#ffddbb",
-                        "surface-tint": "#bdc2ff",
-                        "outline-variant": "#454652",
-                        "tertiary-fixed-dim": "#ffb867",
-                        "outline": "#908f9e",
-                        "on-primary-container": "#fdfaff",
-                        "tertiary": "#ffb867",
-                        "surface-container-lowest": "#0e0e0f",
-                        "on-primary": "#121f8b",
-                        "on-secondary-container": "#b1b5e3",
-                        "secondary-container": "#42466e",
-                        "primary-fixed-dim": "#bdc2ff",
+                        "background": "#131315",
+                        "surface-bright": "#3a393a",
                         "secondary-fixed": "#dfe0ff",
-                        "on-secondary-fixed-variant": "#3f446b",
-                        "surface-dim": "#131315",
-                        "on-tertiary-container": "#fffaf8",
-                        "inverse-on-surface": "#313032",
-                        "on-tertiary": "#482900",
-                        "surface-container-low": "#1c1b1d"
+                        "on-tertiary-fixed": "#2b1700",
+                        "primary-fixed": "#dfe0ff",
+                        "tertiary": "#ffb867",
+                        "on-secondary-container": "#b1b5e3",
+                        "tertiary-container": "#a56500",
+                        "on-secondary-fixed-variant": "#3f446b"
                     },
-                    "borderRadius": {
+                    borderRadius: {
                         "DEFAULT": "0.25rem",
                         "lg": "0.5rem",
                         "xl": "0.75rem",
                         "full": "9999px"
                     },
-                    "fontFamily": {
+                    fontFamily: {
                         "headline": ["Inter"],
                         "display": ["Inter"],
                         "body": ["Inter"],
                         "label": ["Space Grotesk"]
                     }
-                }
-            }
+                },
+            },
         }
     </script>
 
@@ -84,229 +83,131 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        .shadow-extruded {
-            box-shadow: 0 4px 0 0 rgba(94, 106, 210, 0.4);
+        .technical-grid {
+            background-image: radial-gradient(circle at 2px 2px, rgba(69, 70, 82, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
         }
-
+        .glass-panel {
+            background: rgba(32, 31, 33, 0.6);
+            backdrop-filter: blur(12px);
+        }
+        .shadow-extruded {
+            box-shadow: 0 4px 0 0 rgba(18, 31, 139, 0.4);
+        }
         .shadow-inset-soft {
             box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
         }
-
-        .glass-panel {
-            backdrop-filter: blur(12px);
-            background: rgba(32, 31, 33, 0.7);
+        .glow-ambient {
+            filter: blur(80px);
+            opacity: 0.08;
+            pointer-events: none;
         }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes spotlight {
-            from {
-                background-position: 0% 0%;
-            }
-            to {
-                background-position: var(--x) var(--y);
-            }
-        }
-
-        .animate-in {
-            animation: fade-in 0.3s ease-out;
-        }
-
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0e0e0f;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #454652;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #bdc2ff;
-        }
-
-        .line-clamp-1 {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .max-w-xs {
-            max-width: 20rem;
-        }
-        <style>
-    /* Force dark theme for this page */
-    .technical-grid {
-        background: #0a0a0c;
-        background-image:
-            linear-gradient(rgba(94, 106, 210, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(94, 106, 210, 0.03) 1px, transparent 1px);
-        background-size: 40px 40px;
-    }
-
-    .surface-container {
-        background: rgba(28, 27, 29, 0.8);
-        backdrop-filter: blur(10px);
-    }
-
-    .surface-container-low {
-        background: rgba(28, 27, 29, 0.6);
-    }
-
-    .surface-container-lowest {
-        background: rgba(32, 31, 33, 0.95);
-    }
-
-    .surface-container-high {
-        background: rgba(40, 39, 42, 0.9);
-    }
-
-    .text-on-surface {
-        color: #e6e6e6;
-    }
-
-    .text-on-surface-variant {
-        color: #a1a1aa;
-    }
-
-    .text-outline {
-        color: #71717a;
-    }
-
-    .border-outline-variant\/10 {
-        border-color: rgba(113, 113, 122, 0.1);
-    }
-
-    .border-outline-variant\/20 {
-        border-color: rgba(113, 113, 122, 0.2);
-    }
-
-    body, main {
-        background: #0a0a0c;
-    }
-</style>
     </style>
 
     @stack('styles')
 </head>
-<body class="text-on-surface font-body overflow-x-hidden selection:bg-primary/30">
-    <!-- Laboratory Ambient Background Effects -->
-    <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary-container/10 blur-[120px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] rounded-full bg-secondary-container/10 blur-[100px]"></div>
-    </div>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary overflow-x-hidden">
+    <!-- Ambient Lighting Effects -->
+    <div class="fixed top-[-10%] right-[-10%] w-125 h-125 bg-primary rounded-full glow-ambient"></div>
+    <div class="fixed bottom-[-10%] left-[20%] w-150 h-150 bg-secondary-container rounded-full glow-ambient"></div>
 
-    <!-- Side Navigation Shell -->
-    <aside class="bg-surface-container-lowest dark:bg-surface-container-lowest h-screen w-64 flex flex-col fixed left-0 top-0 py-6 px-4 z-50">
-        <div class="mb-10 px-2">
-            <h1 class="font-display text-headline-sm font-bold text-on-surface tracking-tighter">TechSyllabus</h1>
-            <p class="font-label text-[10px] tracking-widest uppercase text-outline mt-1">Academic Lab Admin</p>
+    <!-- SideNavBar (Shared Component) -->
+    <aside class="fixed left-0 top-0 flex flex-col h-screen w-64 bg-[#0e0e0f] border-r border-[#454652]/20 z-50">
+        <div class="p-6 mb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shadow-lg">
+                    <span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+                </div>
+                <div>
+                    <h1 class="font-['Space_Grotesk'] font-bold text-[#e5e1e3] tracking-widest uppercase text-sm leading-tight">Syllabus_System</h1>
+                    <p class="text-[10px] text-outline uppercase tracking-tighter">Soạn Thảo Thông Minh</p>
+                </div>
+            </div>
         </div>
 
-        <nav class="flex-1 space-y-1">
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-on-surface-variant font-medium hover:bg-surface-container hover:text-on-surface {{ request()->routeIs('laboratory*') ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low' : '' }}" href="#">
-                <span class="material-symbols-outlined text-[20px]">biotech</span>
-                <span class="font-label text-label-md tracking-widest uppercase">Laboratory</span>
+        <nav class="flex-1 px-3 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('department.dashboard') ? 'text-primary bg-primary-container/10 border-l-2 border-primary' : 'text-outline hover:text-on-surface hover:bg-surface-container' }} font-label font-medium tracking-tight text-sm uppercase transition-all duration-200"
+               href="{{ route('department.dashboard') }}">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                <span>Trang Chủ</span>
             </a>
 
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-150 active:scale-95 {{ request()->routeIs('department.syllabus-templates*') ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low' : 'text-on-surface-variant' }} hover:bg-surface-container hover:text-on-surface" href="{{ route('department.syllabus-templates.index') }}">
-                <span class="material-symbols-outlined text-[20px]">library_books</span>
-                <span class="font-label text-label-md tracking-widest uppercase">Syllabus Library</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="{{ route('department.syllabus-templates.index') }}">
+                <span class="material-symbols-outlined">dashboard_customize</span>
+                <span>Khung chuẩn đề cương</span>
             </a>
 
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-on-surface-variant font-medium hover:bg-surface-container hover:text-on-surface {{ request()->routeIs('ai-mapping*') ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low' : '' }}" href="#">
-                <span class="material-symbols-outlined text-[20px]">hub</span>
-                <span class="font-label text-label-md tracking-widest uppercase">AI Mapping</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="{{ route('department.programs.index') }}">
+                <span class="material-symbols-outlined">auto_stories</span>
+                <span>Chương trình đào tạo</span>
             </a>
-
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-on-surface-variant font-medium hover:bg-surface-container hover:text-on-surface {{ request()->routeIs('technical-specs*') ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low' : '' }}" href="#">
-                <span class="material-symbols-outlined text-[20px]">settings_input_component</span>
-                <span class="font-label text-label-md tracking-widest uppercase">Technical Specs</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="{{ route('department.courses.index') }}">
+                <span class="material-symbols-outlined">library_books</span>
+                <span>Môn học</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="{{ route('department.members.index') }}">
+                <span class="material-symbols-outlined">people</span>
+                <span>Thành viên viện/khoa</span>
             </a>
         </nav>
-
-        <div class="mt-auto pt-6 border-t border-outline-variant/10 space-y-1">
-            <button class="w-full flex items-center justify-center gap-2 py-3 mb-4 bg-primary-container text-on-primary-container rounded-lg font-bold text-sm shadow-extruded hover:brightness-110 transition-all">
-                <span class="material-symbols-outlined">add</span>
-                Create New Template
-            </button>
-
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container transition-colors" href="#">
-                <span class="material-symbols-outlined text-[20px]">description</span>
-                <span class="font-label text-label-md tracking-widest uppercase">Docs</span>
-            </a>
-
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container transition-colors" href="#">
-                <span class="material-symbols-outlined text-[20px]">help_outline</span>
-                <span class="font-label text-label-md tracking-widest uppercase">Support</span>
-            </a>
-        </div>
+        <div class="mt-auto p-4 border-t border-outline-variant/10">
+                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                    @csrf
+                    <button type="submit" class="group flex items-center gap-2 px-5 py-2.5 bg-error-container/20 text-error border border-error/30 rounded-lg font-label text-xs uppercase tracking-widest font-bold hover:bg-error-container/30 hover:border-error/50 transition-all duration-200">
+                        <span class="material-symbols-outlined text-lg group-hover:rotate-180 transition-transform duration-300">logout</span>
+                        Đăng xuất
+                    </button>
+                </form>
+            </div>
     </aside>
 
-    <!-- Top Navigation Shell -->
-    <header class="bg-surface/80 backdrop-blur-xl flex justify-between items-center ml-64 px-8 py-4 w-[calc(100%-16rem)] sticky top-0 z-40">
-        <div class="flex items-center gap-4 flex-1">
-            <div class="relative w-full max-w-md">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
-                <input class="w-full bg-surface-container-lowest border-none rounded-lg pl-10 pr-4 py-2 font-label text-label-md focus:ring-1 focus:ring-outline-variant text-on-surface placeholder:text-outline/50 shadow-inset-soft" placeholder="Search syllabus parameters..." type="text">
-            </div>
-        </div>
-
-        <div class="flex items-center gap-6">
-            <div class="flex items-center gap-4 text-on-surface-variant">
-                <button class="hover:text-primary transition-opacity relative">
-                    <span class="material-symbols-outlined">notifications</span>
-                    <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-surface"></span>
-                </button>
-                <button class="hover:text-primary transition-opacity">
-                    <span class="material-symbols-outlined">settings</span>
-                </button>
-            </div>
-            <div class="h-8 w-px bg-outline-variant/20 mx-2"></div>
-            <div class="flex items-center gap-3">
-                <div class="text-right">
-                    <p class="text-sm font-bold text-on-surface leading-tight">Admin User</p>
-                    <p class="text-[10px] font-label text-outline uppercase tracking-wider">System Architect</p>
-                </div>
-                <img alt="Administrator" class="w-10 h-10 rounded-full border border-outline-variant/30 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9nZequUGLZ7Jo61iANU5M7-jnRc61QGrMooJjcHDVyttvFY4_RxC1UMolRmKW-PTmeQ3E_qH0hVPsRqw2KmWsG4MWIEqIUXZxjKBOxcoVlgvM9VR2-vZw-OAFXRb1ruBGAtjWzEHUadl50ebERh3EFcFZGquBUXJtwvRGsqDpbs-ulrAPv83wA6pQxceHeqpSC-vlUDiSFBnDOXuCBaI_4LrfzFE4zMFThziHB9QUBK7j1LqO5iXMRaWLiMT89E4ssGcXCZBvD_uV">
-            </div>
-        </div>
-    </header>
-
     <!-- Main Content Canvas -->
-    <main class="ml-64 p-8 min-h-[calc(100vh-72px)] relative z-10" id="main-canvas">
-        @yield('content')
+    <main class="ml-64 min-h-screen technical-grid">
+        <!-- TopAppBar (Shared Component) -->
+        <header class="fixed top-0 right-0 left-64 h-16 bg-[#131315]/80 backdrop-blur-xl border-b border-outline-variant/10 flex items-center justify-between px-8 z-40">
+            <div class="flex items-center flex-1 max-w-xl">
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="w-10 h-10 flex items-center justify-center rounded-full text-outline hover:bg-[#353436]/40 transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button class="w-10 h-10 flex items-center justify-center rounded-full text-outline hover:bg-[#353436]/40 transition-colors">
+                    <span class="material-symbols-outlined">help_outline</span>
+                </button>
+                <div class="h-8 w-px bg-outline-variant/20 mx-2"></div>
+                <div class="flex items-center gap-3 pl-2">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-semibold text-on-surface leading-none">{{ Auth::user()->full_name ?? 'Nguyễn Giảng Viên' }}</p>
+                        <p class="text-[10px] text-outline font-label uppercase tracking-widest mt-1">Trưởng Viện/ Khoa</p>
+                    </div>
+                    <img alt="Profile" class="w-8 h-8 rounded-full border border-outline-variant/30 object-cover"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuADoqwzkaotYRoNfBvQOVUzFkpQM2c4QnP0LFxbgkyfZSNMW5c_Fdbkwrfhi_RyotLPmr_3ZXqw29r07f6aR6eI9drrdSi6-WmuhHMtVGO8q-WQ6IaGuOLun9D0wGDNbCJkgtwmiBoGc_TjN4L2rmwpWPXo6NcHs-Da6zpliBCw88gRsscrCVjPU9-Cn3QfdCnJZrZCkqMC4LX5Tf2dHk7eL712wNRUmH9oeik5awhRWQwRXns2Rfzq97PhtVl_S6clSJTsw6AUdOxp"/>
+                </div>
+            </div>
+        </header>
+
+        <div class="pt-24 px-8 pb-12">
+            @yield('content')
+        </div>
     </main>
 
-    @stack('scripts')
-
     <script>
-        // Micro-interaction: Mouse Tracking Spotlight
-        const canvas = document.getElementById('main-canvas');
-        if (canvas) {
-            canvas.addEventListener('mousemove', e => {
-                const rect = canvas.getBoundingClientRect();
+        document.addEventListener('mousemove', (e) => {
+            const panels = document.querySelectorAll('.glass-panel, .bg-surface-container');
+            panels.forEach(panel => {
+                const rect = panel.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                canvas.style.setProperty('--x', `${x}px`);
-                canvas.style.setProperty('--y', `${y}px`);
+                panel.style.setProperty('--mouse-x', `${x}px`);
+                panel.style.setProperty('--mouse-y', `${y}px`);
             });
-        }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log("Syllabus_System System Initialized...");
+        });
     </script>
+
+    @stack('scripts')
 </body>
 </html>

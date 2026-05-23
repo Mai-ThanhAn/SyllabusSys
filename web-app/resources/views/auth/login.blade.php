@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Authentication Protocol | SYLLABUS LAB</title>
+    <title>Authentication Protocol | Syllabus_System</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -158,7 +158,7 @@
             <div class="flex flex-col items-center mb-10">
                 <div class="w-16 h-16 mb-6 rounded-xl bg-surface-container border border-outline-variant/20 flex items-center justify-center relative overflow-hidden group">
                     <div class="absolute inset-0 bg-linear-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <span class="material-symbols-outlined text-primary-fixed-dim text-3xl" style="font-variation-settings: 'FILL' 1;">biotech</span>
+                    <span class="material-symbols-outlined text-primary-fixed-dim text-3xl" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
                     <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary/40"></div>
                     <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary/40"></div>
                 </div>
@@ -208,7 +208,7 @@
                     <!-- Password Field -->
                     <div class="space-y-2">
                         <div class="flex justify-between items-center px-1">
-                            <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" for="password">Security Phrase</label>
+                            <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" for="password">Mật Khẩu</label>
                         </div>
                         <div class="relative group">
                             <input class="w-full bg-surface-container-lowest border-0 rounded-lg py-3 px-4 text-on-surface placeholder:text-outline/30 focus:ring-2 focus:ring-primary/50 transition-all shadow-inset-soft font-body text-sm @error('password') ring-2 ring-error/50 @enderror"
@@ -231,9 +231,9 @@
                                 <input class="absolute inset-0 opacity-0 cursor-pointer peer" type="checkbox" name="remember">
                                 <span class="material-symbols-outlined text-primary scale-0 peer-checked:scale-100 transition-transform text-xs flex items-center justify-center h-full w-full">check</span>
                             </div>
-                            <span class="text-xs text-on-surface-variant group-hover:text-on-surface transition-colors">Maintain Active Session</span>
+                            <span class="text-xs text-on-surface-variant group-hover:text-on-surface transition-colors">Ghi Nhớ Mật Khẩu</span>
                         </label>
-                        <a class="text-xs text-primary/80 hover:text-primary transition-colors font-medium" href="#">Reset Protocol</a>
+                        <a class="text-xs text-primary/80 hover:text-primary transition-colors font-medium" href="#">Quên Mật Khẩu</a>
                     </div>
 
                     <!-- Action Button -->
@@ -267,7 +267,7 @@
 
     <!-- Visual Polish: Floating Lab Equipment Shadows -->
     <div class="fixed bottom-10 right-10 opacity-10 pointer-events-none transform rotate-12 scale-150">
-        <span class="material-symbols-outlined text-[300px] text-primary">science</span>
+        <span class="material-symbols-outlined text-[300px] text-primary">auto_stories</span>
     </div>
     <div class="fixed top-20 left-10 opacity-10 pointer-events-none transform -rotate-12 scale-110">
         <span class="material-symbols-outlined text-[150px] text-secondary">database</span>

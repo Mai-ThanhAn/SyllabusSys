@@ -126,25 +126,20 @@
         </div>
 
         <nav class="flex-1 px-3 space-y-1">
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('program_director.dashboard') ? 'text-primary bg-primary-container/10 border-l-2 border-primary' : 'text-outline hover:text-on-surface hover:bg-surface-container' }} font-label font-medium tracking-tight text-sm uppercase transition-all duration-200"
-               href="{{ route('program_director.dashboard') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('lecturer.dashboard') ? 'text-primary bg-primary-container/10 border-l-2 border-primary' : 'text-outline hover:text-on-surface hover:bg-surface-container' }} font-label font-medium tracking-tight text-sm uppercase transition-all duration-200"
+               href="{{ route('lecturer.dashboard') }}">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
                 <span>Trang Chủ</span>
             </a>
 
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="{{ route('program_director.syllabus_shells.create') }}">
-                <span class="material-symbols-outlined">add_circle</span>
-                <span>tạo đề cương</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="#">
+                <span class="material-symbols-outlined">library_books</span>
+                <span>Quản Lý Tài Khoản</span>
             </a>
 
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="{{ route('program_director.syllabus_shells.index') }}">
-                <span class="material-symbols-outlined">inventory_2</span>
-                <span>Danh sách đề cương</span>
-            </a>
-
-            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="{{ route('program_director.syllabus_approvals.index') }}">
-                <span class="material-symbols-outlined">approval</span>
-                <span>Phê Duyệt đề cương</span>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label font-medium tracking-tight text-sm uppercase transition-all duration-200" href="#">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                <span>Quản Lý Viện Khoa</span>
             </a>
         </nav>
         <div class="mt-auto p-4 border-t border-outline-variant/10">
@@ -175,7 +170,7 @@
                 <div class="flex items-center gap-3 pl-2">
                     <div class="text-right hidden sm:block">
                         <p class="text-xs font-semibold text-on-surface leading-none">{{ Auth::user()->full_name ?? 'Nguyễn Giảng Viên' }}</p>
-                        <p class="text-[10px] text-outline font-label uppercase tracking-widest mt-1">Giám đốc CTDT</p>
+                        <p class="text-[10px] text-outline font-label uppercase tracking-widest mt-1">Quản Trị Viên Trường</p>
                     </div>
                     <img alt="Profile" class="w-8 h-8 rounded-full border border-outline-variant/30 object-cover"
                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuADoqwzkaotYRoNfBvQOVUzFkpQM2c4QnP0LFxbgkyfZSNMW5c_Fdbkwrfhi_RyotLPmr_3ZXqw29r07f6aR6eI9drrdSi6-WmuhHMtVGO8q-WQ6IaGuOLun9D0wGDNbCJkgtwmiBoGc_TjN4L2rmwpWPXo6NcHs-Da6zpliBCw88gRsscrCVjPU9-Cn3QfdCnJZrZCkqMC4LX5Tf2dHk7eL712wNRUmH9oeik5awhRWQwRXns2Rfzq97PhtVl_S6clSJTsw6AUdOxp"/>

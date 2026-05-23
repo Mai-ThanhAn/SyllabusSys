@@ -4,7 +4,6 @@
 
 @section('content')
 <!-- Main Content Canvas -->
-<main class="ml-64 pt-24 px-8 pb-12 relative z-10 technical-grid min-h-screen">
     <div class="max-w-7xl mx-auto">
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -21,15 +20,6 @@
                 <p class="text-on-surface-variant font-body text-sm max-w-2xl">
                     Trung tâm điều khiển học thuật - Quản lý và giám sát toàn bộ quy trình xây dựng đề cương môn học.
                 </p>
-            </div>
-            <div>
-                <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                    @csrf
-                    <button type="submit" class="group flex items-center gap-2 px-5 py-2.5 bg-error-container/20 text-error border border-error/30 rounded-lg font-label text-xs uppercase tracking-widest font-bold hover:bg-error-container/30 hover:border-error/50 transition-all duration-200">
-                        <span class="material-symbols-outlined text-lg group-hover:rotate-180 transition-transform duration-300">logout</span>
-                        Đăng xuất
-                    </button>
-                </form>
             </div>
         </div>
 
@@ -167,7 +157,6 @@
             </div>
         </div>
     </div>
-</main>
 
 <script>
     // Auto-refresh status indicators (optional)

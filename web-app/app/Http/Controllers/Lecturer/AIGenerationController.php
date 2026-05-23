@@ -21,21 +21,56 @@ class AIGenerationController extends Controller
         protected AIClient $aiClient
     ) {}
 
+    private function ensureAiAllowed(Syllabus $syllabus, string $sectionCode): void
+    {
+        $allowed = $syllabus->template
+            ->sections()
+            ->where('section_code', $sectionCode)
+            ->where('is_ai_generatable', true)
+            ->exists();
+
+        abort_unless($allowed, 403, 'Section này chưa được phép dùng AI.');
+    }
+
+    private function getCourseDescription(Syllabus $syllabus): string
+    {
+        $content = $syllabus->contents
+            ->first(function ($content) {
+                return $content->section?->section_code === 'COURSE_DESCRIPTION';
+            });
+
+        if (!$content) {
+            return '';
+        }
+
+        $raw = $content->content_raw;
+
+        if (is_array($raw) && isset($raw['data']['description'])) {
+            return $raw['data']['description'];
+        }
+
+        return trim(strip_tags($content->content_html ?? ''));
+    }
+
     public function generateCO(int $syllabusId)
     {
         $this->ensureAssigned($syllabusId);
 
         $syllabus = Syllabus::with([
             'course',
+            'template.sections',
+            'contents.section',
             'ploTargets.programLearningOutcome',
             'piTargets.performanceIndicator',
         ])->findOrFail($syllabusId);
+
+        $this->ensureAiAllowed($syllabus, 'COURSE_OBJECTIVES');
 
         $payload = [
             'course_name' => $syllabus->course->course_name,
             'course_type' => 'theory',
             'credits' => $syllabus->course->credits,
-            'course_description' => '',
+            'course_description' => 'contents.section',
             'plos' => $syllabus->ploTargets->map(fn($t) => [
                 'code' => $t->programLearningOutcome->code,
                 'description' => $t->programLearningOutcome->description,
@@ -136,6 +171,7 @@ class AIGenerationController extends Controller
             'ploTargets.programLearningOutcome',
             'piTargets.performanceIndicator',
         ])->findOrFail($syllabusId);
+        $this->ensureAiAllowed($syllabus, 'COURSE_LEARNING_OUTCOMES');
 
         $payload = [
             'course_name' => $syllabus->course->course_name,
@@ -237,6 +273,7 @@ class AIGenerationController extends Controller
             'piTargets.performanceIndicator',
         ])->findOrFail($syllabusId);
 
+        $this->ensureAiAllowed($syllabus, 'TEACHING_PLAN');
         $payload = [
             'course_name' => $syllabus->course->course_name,
             'course_type' => 'theory',
@@ -354,7 +391,15 @@ class AIGenerationController extends Controller
 
                 TeachingPlanCloMapping::where('teaching_plan_item_id', $item->id)->delete();
 
+                $validCloIds = CourseLearningOutcome::where('syllabus_id', $syllabusId)
+                    ->pluck('id')
+                    ->toArray();
+
                 foreach (($data['mapped_clo_ids'] ?? []) as $cloId) {
+                    if (!in_array((int) $cloId, $validCloIds, true)) {
+                        continue;
+                    }
+
                     TeachingPlanCloMapping::create([
                         'teaching_plan_item_id' => $item->id,
                         'clo_id' => $cloId,

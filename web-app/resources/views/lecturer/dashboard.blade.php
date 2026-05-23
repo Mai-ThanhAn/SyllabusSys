@@ -1,6 +1,6 @@
 @extends('layouts.lecturer')
 
-@section('title', 'Dashboard Giảng viên | Syllabus Lab')
+@section('title', 'Dashboard Giảng viên | Syllabus_System')
 
 @section('content')
 <!-- Page Header -->
@@ -218,15 +218,7 @@
             <div class="space-y-4 font-mono">
                 <div class="flex gap-4 p-3 rounded bg-surface-container-lowest/50 border-l-2 border-primary">
                     <span class="text-[10px] text-primary/60">14:22:10</span>
-                    <p class="text-xs text-on-surface-variant"><span class="text-secondary">[SERVER]</span> Đề cương đã được gửi cho Hội đồng chuyên môn.</p>
-                </div>
-                <div class="flex gap-4 p-3 rounded bg-surface-container-lowest/50 border-l-2 border-emerald-500">
-                    <span class="text-[10px] text-emerald-500/60">09:15:45</span>
-                    <p class="text-xs text-on-surface-variant"><span class="text-emerald-400">[AI_SCAN]</span> Phân tích ma trận CLO-PLO hoàn tất (Độ tương quan 94%).</p>
-                </div>
-                <div class="flex gap-4 p-3 rounded bg-surface-container-lowest/50 border-l-2 border-outline-variant">
-                    <span class="text-[10px] text-outline/60">Hôm qua</span>
-                    <p class="text-xs text-on-surface-variant"><span class="text-outline">[USER]</span> Bạn đã thay đổi cấu trúc chương trình môn học.</p>
+                    <p class="text-xs text-on-surface-variant"><span class="text-secondary">[SERVER]</span> Đang phát triển.</p>
                 </div>
             </div>
         </div>
@@ -235,12 +227,9 @@
     <div class="col-span-1">
         <div class="bg-primary-container rounded-2xl p-6 relative overflow-hidden h-full flex flex-col justify-between">
             <div class="relative z-10">
-                <h4 class="text-on-primary font-bold text-lg leading-tight mb-2">Trợ lý AI Lab</h4>
-                <p class="text-on-primary/80 text-xs">Cần hỗ trợ ánh xạ chuẩn đầu ra (CLO) sang ma trận PLO? Lab AI luôn sẵn sàng hỗ trợ bạn.</p>
+                <h4 class="text-on-primary font-bold text-lg leading-tight mb-2">Trợ lý AI</h4>
+                <p class="text-on-primary/120 text-md">Hiện tại hệ thống đã có thể hỗ trợ bạn trong việc tạo sinh Co, CLO và hỗ trợ gợi ý chương đề xuất, bạn có thể trải nghiệm thử tính năng này.</p>
             </div>
-            <button class="relative z-10 w-full mt-6 py-3 bg-on-primary text-primary-container font-label uppercase tracking-widest text-xs font-bold rounded-lg shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all">
-                Bắt đầu Mapping
-            </button>
             <span class="material-symbols-outlined absolute -bottom-8 -right-8 text-[160px] text-on-primary/10">auto_awesome</span>
         </div>
     </div>

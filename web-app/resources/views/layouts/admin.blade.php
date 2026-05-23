@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('title', 'Syllabus Lab | Admin Dashboard')</title>
+    <title>@yield('title', 'Syllabus_System | Admin Dashboard')</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -113,10 +113,10 @@
     <aside class="h-screen w-64 fixed left-0 top-0 flex flex-col p-4 gap-6 bg-surface-container-lowest z-50">
         <div class="flex items-center gap-3 px-2">
             <div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
-                <span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">science</span>
+                <span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
             </div>
             <div>
-                <h1 class="font-headline text-xl font-bold tracking-tighter text-on-surface">Syllabus Lab</h1>
+                <h1 class="font-headline text-xl font-bold tracking-tighter text-on-surface">Syllabus_System</h1>
                 <p class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">Technical Orchestration</p>
             </div>
         </div>
