@@ -48,7 +48,57 @@
                 <p class="text-[10px] text-on-surface-variant/50 mt-1">Click để điều hướng nhanh</p>
             </div>
 
-            <!-- Navigation Links -->
+            <!-- ==================== PHẦN PLO & PI MỤC TIÊU ==================== -->
+            <div class="p-5 border-b border-outline-variant/10">
+                <h3 class="font-label text-[10px] uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">target</span>
+                    Mục tiêu chuẩn đầu ra
+                </h3>
+
+                <!-- PLO Section -->
+                <section class="mb-6">
+                    <label class="font-label text-xs font-semibold text-on-surface-variant block mb-3">PLO mục tiêu</label>
+                    <div class="space-y-2">
+                        @forelse($syllabus->ploTargets as $target)
+                            <div class="bg-surface-container p-3 rounded-lg border-l-2 border-primary-container">
+                                <span class="text-[10px] font-label font-bold text-primary-fixed">
+                                    {{ $target->programLearningOutcome->code ?? 'N/A' }}
+                                </span>
+                                <p class="text-[11px] leading-relaxed text-on-surface/80 mt-1">
+                                    {{ Str::limit($target->programLearningOutcome->description ?? 'Chưa có mô tả', 80) }}
+                                </p>
+                            </div>
+                        @empty
+                            <div class="bg-surface-container p-3 rounded-lg border-l-2 border-outline-variant/20">
+                                <p class="text-[11px] leading-relaxed text-on-surface/50">Chưa có PLO mục tiêu.</p>
+                            </div>
+                        @endforelse
+                    </div>
+                </section>
+
+                <!-- PI Section -->
+                <section>
+                    <label class="font-label text-xs font-semibold text-on-surface-variant block mb-3">PI mục tiêu</label>
+                    <div class="space-y-2">
+                        @forelse($syllabus->piTargets as $target)
+                            <div class="bg-surface-container p-3 rounded-lg border-l-2 border-tertiary">
+                                <span class="text-[10px] font-label font-bold text-tertiary">
+                                    {{ $target->performanceIndicator->code ?? 'N/A' }}
+                                </span>
+                                <p class="text-[11px] leading-relaxed text-on-surface/80 mt-1">
+                                    {{ Str::limit($target->performanceIndicator->description ?? 'Chưa có mô tả', 80) }}
+                                </p>
+                            </div>
+                        @empty
+                            <div class="bg-surface-container p-3 rounded-lg border-l-2 border-outline-variant/20">
+                                <p class="text-[11px] leading-relaxed text-on-surface/50">Chưa có PI mục tiêu.</p>
+                            </div>
+                        @endforelse
+                    </div>
+                </section>
+            </div>
+
+            <!-- ==================== MỤC LỤC ĐỀ CƯƠNG ==================== -->
             <div class="flex-1 overflow-y-auto p-4">
                 <nav class="space-y-1">
                     @foreach ($contents as $content)
@@ -125,6 +175,10 @@
                             <div class="text-[10px] text-on-surface-variant/60">Syllabus ID</div>
                             <div class="text-xs font-mono text-primary">#{{ $syllabus->id }}</div>
                         </div>
+                        <a href="{{ route('lecturer.syllabuses.export_word', $syllabus->id) }}"
+                            class="px-4 py-2 rounded-lg bg-surface-container-highest text-on-surface text-xs font-bold">
+                            Xuất Word
+                        </a>
                     </div>
                 </div>
 
@@ -205,7 +259,8 @@
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div
                                                 class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/10">
-                                                <p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Tên
+                                                <p class="text-[10px] uppercase tracking-widest text-on-surface-variant">
+                                                    Tên
                                                     học phần</p>
                                                 <p class="text-sm font-semibold text-on-surface">
                                                     {{ $info['course_name'] ?? '—' }}</p>
@@ -213,7 +268,8 @@
 
                                             <div
                                                 class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/10">
-                                                <p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Tên
+                                                <p class="text-[10px] uppercase tracking-widest text-on-surface-variant">
+                                                    Tên
                                                     tiếng Anh</p>
                                                 <p class="text-sm font-semibold text-on-surface">
                                                     {{ $info['english_name'] ?? '—' }}</p>
@@ -350,134 +406,160 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // ==================== CKEDITOR ====================
-        document.querySelectorAll('.ckeditor').forEach(function(textarea) {
-            ClassicEditor
-                .create(textarea, {
-                    toolbar: {
-                        items: [
-                            'heading', '|',
-                            'bold', 'italic', 'underline', '|',
-                            'bulletedList', 'numberedList', '|',
-                            'insertTable', '|',
-                            'blockQuote', 'link', '|',
-                            'undo', 'redo'
-                        ],
-                        shouldNotGroupWhenFull: true
-                    },
-                    table: {
-                        contentToolbar: [
-                            'tableColumn',
-                            'tableRow',
-                            'mergeTableCells',
-                            'tableProperties',
-                            'tableCellProperties'
-                        ]
-                    },
-                    heading: {
-                        options: [
-                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                            { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
-                        ]
-                    }
-                })
-                .then(editor => {
-                    // Auto-save indicator
-                    editor.model.document.on('change:data', () => {
-                        const saveBtn = editor.sourceElement.closest('form')?.querySelector('button[type="submit"]');
-                        if (saveBtn) {
-                            saveBtn.classList.add('animate-pulse');
-                            setTimeout(() => saveBtn.classList.remove('animate-pulse'), 500);
+        document.addEventListener('DOMContentLoaded', function() {
+            // ==================== CKEDITOR ====================
+            document.querySelectorAll('.ckeditor').forEach(function(textarea) {
+                ClassicEditor
+                    .create(textarea, {
+                        toolbar: {
+                            items: [
+                                'heading', '|',
+                                'bold', 'italic', 'underline', '|',
+                                'bulletedList', 'numberedList', '|',
+                                'insertTable', '|',
+                                'blockQuote', 'link', '|',
+                                'undo', 'redo'
+                            ],
+                            shouldNotGroupWhenFull: true
+                        },
+                        table: {
+                            contentToolbar: [
+                                'tableColumn',
+                                'tableRow',
+                                'mergeTableCells',
+                                'tableProperties',
+                                'tableCellProperties'
+                            ]
+                        },
+                        heading: {
+                            options: [{
+                                    model: 'paragraph',
+                                    title: 'Paragraph',
+                                    class: 'ck-heading_paragraph'
+                                },
+                                {
+                                    model: 'heading1',
+                                    view: 'h1',
+                                    title: 'Heading 1',
+                                    class: 'ck-heading_heading1'
+                                },
+                                {
+                                    model: 'heading2',
+                                    view: 'h2',
+                                    title: 'Heading 2',
+                                    class: 'ck-heading_heading2'
+                                },
+                                {
+                                    model: 'heading3',
+                                    view: 'h3',
+                                    title: 'Heading 3',
+                                    class: 'ck-heading_heading3'
+                                }
+                            ]
                         }
-                    });
-                })
-                .catch(error => console.error(error));
-        });
-
-        // ==================== MỤC LỤC ====================
-        const tocLinks = document.querySelectorAll('.toc-link');
-        const sections = document.querySelectorAll('[data-section-id]');
-
-        function updateActiveLink() {
-            let current = '';
-            const viewportMid = window.scrollY + 150;
-
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const sectionTop = rect.top + window.scrollY;
-                const sectionBottom = sectionTop + rect.height;
-
-                if (viewportMid >= sectionTop && viewportMid < sectionBottom) {
-                    current = section.getAttribute('data-section-id');
-                }
+                    })
+                    .then(editor => {
+                        // Auto-save indicator
+                        editor.model.document.on('change:data', () => {
+                            const saveBtn = editor.sourceElement.closest('form')?.querySelector(
+                                'button[type="submit"]');
+                            if (saveBtn) {
+                                saveBtn.classList.add('animate-pulse');
+                                setTimeout(() => saveBtn.classList.remove('animate-pulse'),
+                                    500);
+                            }
+                        });
+                    })
+                    .catch(error => console.error(error));
             });
+
+            // ==================== MỤC LỤC ====================
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const sections = document.querySelectorAll('[data-section-id]');
+
+            function updateActiveLink() {
+                let current = '';
+                const viewportMid = window.scrollY + 150;
+
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + window.scrollY;
+                    const sectionBottom = sectionTop + rect.height;
+
+                    if (viewportMid >= sectionTop && viewportMid < sectionBottom) {
+                        current = section.getAttribute('data-section-id');
+                    }
+                });
+
+                tocLinks.forEach(link => {
+                    const linkSectionId = link.getAttribute('data-section-id');
+                    if (linkSectionId === current) {
+                        link.classList.add('bg-primary/15', 'text-primary', 'border-l-2', 'border-primary');
+                        link.classList.remove('text-on-surface-variant');
+                    } else {
+                        link.classList.remove('bg-primary/15', 'text-primary', 'border-l-2',
+                            'border-primary');
+                        link.classList.add('text-on-surface-variant');
+                    }
+                });
+            }
 
             tocLinks.forEach(link => {
-                const linkSectionId = link.getAttribute('data-section-id');
-                if (linkSectionId === current) {
-                    link.classList.add('bg-primary/15', 'text-primary', 'border-l-2', 'border-primary');
-                    link.classList.remove('text-on-surface-variant');
-                } else {
-                    link.classList.remove('bg-primary/15', 'text-primary', 'border-l-2', 'border-primary');
-                    link.classList.add('text-on-surface-variant');
-                }
-            });
-        }
-
-        tocLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    setTimeout(updateActiveLink, 300);
-                }
-            });
-        });
-
-        window.addEventListener('scroll', updateActiveLink);
-        updateActiveLink();
-
-        // ==================== PROGRESS TRACKING ====================
-        function updateProgress() {
-            const allSections = document.querySelectorAll('[data-section-id]');
-            let completedCount = 0;
-
-            allSections.forEach(section => {
-                const form = section.querySelector('form');
-                const textarea = section.querySelector('textarea.ckeditor');
-
-                if (form && textarea && textarea.value.trim().length > 100) {
-                    completedCount++;
-                } else if (!form) {
-                    const hasContent = section.querySelector('.co-item, .clo-item, .plan-item') ||
-                        (section.querySelectorAll('input, textarea').length > 0);
-                    if (hasContent) completedCount++;
-                }
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        setTimeout(updateActiveLink, 300);
+                    }
+                });
             });
 
-            const percent = allSections.length > 0 ? Math.round((completedCount / allSections.length) * 100) : 0;
-            const progressBar = document.getElementById('progress-bar');
-            const progressPercent = document.getElementById('progress-percent');
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
 
-            if (progressBar && progressPercent) {
-                progressBar.style.width = percent + '%';
-                progressPercent.textContent = percent + '%';
+            // ==================== PROGRESS TRACKING ====================
+            function updateProgress() {
+                const allSections = document.querySelectorAll('[data-section-id]');
+                let completedCount = 0;
+
+                allSections.forEach(section => {
+                    const form = section.querySelector('form');
+                    const textarea = section.querySelector('textarea.ckeditor');
+
+                    if (form && textarea && textarea.value.trim().length > 100) {
+                        completedCount++;
+                    } else if (!form) {
+                        const hasContent = section.querySelector('.co-item, .clo-item, .plan-item') ||
+                            (section.querySelectorAll('input, textarea').length > 0);
+                        if (hasContent) completedCount++;
+                    }
+                });
+
+                const percent = allSections.length > 0 ? Math.round((completedCount / allSections.length) * 100) :
+                    0;
+                const progressBar = document.getElementById('progress-bar');
+                const progressPercent = document.getElementById('progress-percent');
+
+                if (progressBar && progressPercent) {
+                    progressBar.style.width = percent + '%';
+                    progressPercent.textContent = percent + '%';
+                }
             }
-        }
 
-        setTimeout(updateProgress, 500);
-    });
-</script>
+            setTimeout(updateProgress, 500);
+        });
+    </script>
 
     <style>
         .scroll-mt-24 {
             scroll-margin-top: 90px;
         }
+
         .ck-editor__editable {
             min-height: 250px;
             background-color: #1c1b1d !important;

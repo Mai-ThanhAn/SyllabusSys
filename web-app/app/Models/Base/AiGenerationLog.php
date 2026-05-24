@@ -21,6 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $generated_output
  * @property string|null $model_name
  * @property Carbon|null $created_at
+ * @property string|null $generation_type
+ * @property string|null $verification_result
+ * @property string|null $status
  *
  * @property Syllabus|null $syllabus
  *
@@ -35,7 +38,8 @@ class AiGenerationLog extends Model
 		'syllabus_id' => 'int',
 		'input_context' => 'binary',
 		'retrieved_examples' => 'binary',
-		'generated_output' => 'binary'
+		'generated_output' => 'binary',
+		'verification_result' => 'binary'
 	];
 
 	public function syllabus()

@@ -6,8 +6,8 @@
 
 namespace App\Models\Base;
 
-use App\Models\Syllabus;
-use App\Models\User;
+use App\Models\Base\Syllabus;
+use App\Models\Base\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

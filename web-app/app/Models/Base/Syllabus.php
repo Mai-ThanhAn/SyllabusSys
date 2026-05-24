@@ -18,6 +18,7 @@ use App\Models\Base\SyllabusHistory;
 use App\Models\Base\SyllabusOutcome;
 use App\Models\Base\SyllabusPiTarget;
 use App\Models\Base\SyllabusPloTarget;
+use App\Models\Base\SyllabusRagCorpu;
 use App\Models\Base\SyllabusTemplate;
 use App\Models\Base\SyllabusVersion;
 use App\Models\Base\TeachingPlanItem;
@@ -48,13 +49,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|ApprovedSyllabusCorpu[] $approved_syllabus_corpus
  * @property Collection|CourseObjective[] $course_objectives
  * @property Collection|CourseLearningOutcome[] $course_learning_outcomes
- * @property Collection|AiGenerationLog[] $ai_generation_logs
  * @property Collection|SyllabusVersion[] $syllabus_versions
  * @property Collection|AiComplianceReport[] $ai_compliance_reports
  * @property Collection|SyllabusPloTarget[] $syllabus_plo_targets
  * @property Collection|SyllabusPiTarget[] $syllabus_pi_targets
  * @property Collection|SyllabusAssignment[] $syllabus_assignments
  * @property Collection|TeachingPlanItem[] $teaching_plan_items
+ * @property Collection|SyllabusRagCorpu[] $syllabus_rag_corpus
+ * @property Collection|AiGenerationLog[] $ai_generation_logs
  *
  * @package App\Models\Base\Base
  */
@@ -111,11 +113,6 @@ class Syllabus extends Model
 		return $this->hasMany(CourseLearningOutcome::class);
 	}
 
-	public function ai_generation_logs()
-	{
-		return $this->hasMany(AiGenerationLog::class);
-	}
-
 	public function syllabus_versions()
 	{
 		return $this->hasMany(SyllabusVersion::class);
@@ -144,5 +141,15 @@ class Syllabus extends Model
 	public function teaching_plan_items()
 	{
 		return $this->hasMany(TeachingPlanItem::class);
+	}
+
+	public function syllabus_rag_corpus()
+	{
+		return $this->hasMany(SyllabusRagCorpu::class);
+	}
+
+	public function ai_generation_logs()
+	{
+		return $this->hasMany(AiGenerationLog::class);
 	}
 }

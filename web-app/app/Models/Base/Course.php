@@ -10,6 +10,7 @@ use App\Models\Base\ApprovedSyllabusCorpu;
 use App\Models\Base\InstructorCourse;
 use App\Models\Base\Program;
 use App\Models\Base\Syllabus;
+use App\Models\Base\SyllabusRagCorpu;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|InstructorCourse[] $instructor_courses
  * @property Collection|ApprovedSyllabusCorpu[] $approved_syllabus_corpus
  * @property Collection|Syllabus[] $syllabi
+ * @property Collection|SyllabusRagCorpu[] $syllabus_rag_corpus
  *
  * @package App\Models\Base\Base
  */
@@ -59,5 +61,10 @@ class Course extends Model
 	public function syllabi()
 	{
 		return $this->hasMany(Syllabus::class);
+	}
+
+	public function syllabus_rag_corpus()
+	{
+		return $this->hasMany(SyllabusRagCorpu::class);
 	}
 }

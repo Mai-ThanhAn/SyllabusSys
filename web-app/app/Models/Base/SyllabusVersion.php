@@ -43,8 +43,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|SyllabusVersionContent[] $syllabus_version_contents
  * @property Collection|\App\Models\Base\SyllabusVersion[] $syllabus_versions
  * @property Collection|AiComplianceReport[] $ai_compliance_reports
- * @property Collection|SyllabusVersionCourseObjective[] $syllabus_version_course_objectives
  * @property Collection|SyllabusVersionCourseLearningOutcome[] $syllabus_version_course_learning_outcomes
+ * @property Collection|SyllabusVersionCourseObjective[] $syllabus_version_course_objectives
  * @property Collection|SyllabusVersionTeachingPlanItem[] $syllabus_version_teaching_plan_items
  *
  * @package App\Models\Base\Base
@@ -108,14 +108,14 @@ class SyllabusVersion extends Model
 		return $this->hasMany(AiComplianceReport::class, 'version_id');
 	}
 
-	public function syllabus_version_course_objectives()
-	{
-		return $this->hasMany(SyllabusVersionCourseObjective::class, 'version_id');
-	}
-
 	public function syllabus_version_course_learning_outcomes()
 	{
 		return $this->hasMany(SyllabusVersionCourseLearningOutcome::class, 'version_id');
+	}
+
+	public function syllabus_version_course_objectives()
+	{
+		return $this->hasMany(SyllabusVersionCourseObjective::class, 'version_id');
 	}
 
 	public function syllabus_version_teaching_plan_items()

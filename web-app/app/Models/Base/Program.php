@@ -9,6 +9,7 @@ namespace App\Models\Base;
 use App\Models\Base\Course;
 use App\Models\Base\Department;
 use App\Models\Base\ProgramLearningOutcome;
+use App\Models\Base\SyllabusRagCorpu;
 use App\Models\Base\SyllabusTemplate;
 use App\Models\Base\User;
 use Carbon\Carbon;
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|Course[] $courses
  * @property Collection|SyllabusTemplate[] $syllabus_templates
  * @property Collection|ProgramLearningOutcome[] $program_learning_outcomes
+ * @property Collection|SyllabusRagCorpu[] $syllabus_rag_corpus
  *
  * @package App\Models\Base\Base
  */
@@ -66,5 +68,10 @@ class Program extends Model
 	public function program_learning_outcomes()
 	{
 		return $this->hasMany(ProgramLearningOutcome::class);
+	}
+
+	public function syllabus_rag_corpus()
+	{
+		return $this->hasMany(SyllabusRagCorpu::class);
 	}
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Lecturer\AIGenerationController;
 use App\Http\Controllers\Lecturer\SyllabusAuthoringController;
+use App\Http\Controllers\Lecturer\SyllabusExportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Lecturer\LecturerDashboardController;
 
@@ -68,3 +69,7 @@ Route::post(
     '/syllabuses/{syllabusId}/submit',
     [SyllabusAuthoringController::class, 'submitForApproval']
 )->name('lecturer.syllabuses.submit');
+Route::get('/lecturer/syllabuses/{id}/export-word', [
+    SyllabusExportController::class,
+    'exportWord'
+])->name('lecturer.syllabuses.export_word');

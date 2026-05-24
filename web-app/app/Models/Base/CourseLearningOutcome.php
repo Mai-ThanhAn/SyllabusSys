@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $syllabus_id
  * @property string|null $code
  * @property string $description
- * @property int|null $bloom_level
+ * @property string|null $bloom_level
  *
  * @property Syllabus|null $syllabus
  * @property Collection|CloPiMapping[] $clo_pi_mappings
@@ -33,8 +33,7 @@ class CourseLearningOutcome extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'syllabus_id' => 'int',
-		'bloom_level' => 'int'
+		'syllabus_id' => 'int'
 	];
 
 	public function syllabus()

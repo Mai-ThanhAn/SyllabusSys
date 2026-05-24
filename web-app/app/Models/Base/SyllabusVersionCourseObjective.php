@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $version_id
  * @property string $code
  * @property string $description
- * @property int|null $bloom_level
+ * @property string|null $bloom_level
  * @property Carbon|null $created_at
  *
  * @property SyllabusVersion $syllabus_version
@@ -30,8 +30,7 @@ class SyllabusVersionCourseObjective extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'version_id' => 'int',
-		'bloom_level' => 'int'
+		'version_id' => 'int'
 	];
 
 	public function syllabus_version()
